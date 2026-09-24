@@ -3,6 +3,7 @@ import { ProjectCard } from '../components/ProjectCard'
 import { ProjectDetail } from '../components/ProjectDetail'
 import { projectFilters, projects } from '../data/projects'
 import { useReveal } from '../lib/reveal'
+import { capitalize, numberWord } from '../lib/words'
 
 export function Projects({ selectedId }: { selectedId?: string }) {
   const [filter, setFilter] = useState('All')
@@ -27,7 +28,7 @@ export function Projects({ selectedId }: { selectedId?: string }) {
         <span className="kicker" data-reveal>Projects</span>
         <h1 data-reveal>Things I've built</h1>
         <p className="lead" data-reveal>
-          Five personal projects, each written up as a short case study: the problem, my approach, the result, and the actual code.
+          {capitalize(numberWord(projects.length))} personal projects, each written up as a short case study: the problem, my approach, the result, and the actual code.
         </p>
       </header>
 

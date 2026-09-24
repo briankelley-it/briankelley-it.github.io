@@ -6,6 +6,7 @@ import { projects } from '../data/projects'
 import { about, hero, site } from '../data/site'
 import { skills } from '../data/skills'
 import { useReveal } from '../lib/reveal'
+import { numberWord } from '../lib/words'
 
 export function Home() {
   useReveal([])
@@ -87,7 +88,7 @@ export function Home() {
               <h2 id="featured-title" data-reveal>Recent projects</h2>
             </div>
             <a className="btn btn-ghost" href="#projects" data-reveal>
-              All {projects.length === 5 ? 'five' : projects.length} projects <Icon icon={ArrowRight} size={16} />
+              All {numberWord(projects.length)} projects <Icon icon={ArrowRight} size={16} />
             </a>
           </div>
           <div className="project-grid">
