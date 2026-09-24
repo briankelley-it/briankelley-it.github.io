@@ -34,9 +34,159 @@ export type Project = {
 }
 
 /** Filter buttons on the Projects page, in display order. */
-export const projectFilters = ['All', 'SQL', 'Python', 'pandas', 'ETL', 'Schema design', 'Testing']
+export const projectFilters = ['All', 'SQL', 'Python', 'dbt', 'Airflow', 'AWS', 'ETL', 'pandas', 'Schema design', 'Testing']
 
 export const projects: Project[] = [
+  {
+    id: 'taxi-elt-aws',
+    title: 'NYC Taxi ELT on AWS',
+    kicker: 'Data engineering',
+    summary: 'Airflow lands monthly trip data in S3, Glue catalogs it, and dbt models it on Athena into tested, BI-ready tables.',
+    skills: ['Python', 'SQL', 'dbt', 'Airflow', 'AWS', 'ETL', 'Testing'],
+    repo: 'https://github.com/briankelley-it/nyc-taxi-elt', // PLACEHOLDER repo URL
+    featured: true,
+    // PLACEHOLDER metrics: replace with numbers from your own runs
+    metrics: [
+      { value: '12', label: 'monthly files loaded' },
+      { value: '3', label: 'dbt layers: staging, intermediate, marts' },
+      { value: '15', label: 'dbt tests on every run' },
+    ],
+    problem:
+      'NYC publishes taxi trips as one large Parquet file per month. I wanted a small lakehouse-style pipeline that loads new months automatically and gives BI tools clean daily tables, without re-processing everything each time.',
+    approach: [
+      'Airflow DAG runs monthly: downloads the Parquet file and uploads it to S3 under a raw/ prefix partitioned by year and month.',
+      'A Glue crawler updates the Data Catalog so the new partition is queryable in Athena right away.',
+      'dbt Core (dbt-athena) builds staging models that clean types and drop bad rows, then an incremental fact table so only the new month is processed.',
+      'dbt tests (not_null, unique, accepted_values, relationships) run after every build, and GitHub Actions runs dbt build on each pull request.',
+    ],
+    solution:
+      'A repeatable ELT pipeline: raw files in S3, a catalog in Glue, SQL models in dbt, orchestration in Airflow, and CI on every change. The marts are small, documented tables that Tableau or Power BI can read straight from Athena.',
+    role: 'Solo project. I designed the S3 layout and the dbt models, wrote the Airflow DAG and the CI workflow, and documented how to run it.',
+    learned:
+      'Partitioning and incremental models are what keep lake queries cheap. I also learned to treat data like code: every model is versioned, tested and reviewed before it reaches the people who use it.',
+    process: [
+      { alt: 'Architecture diagram: Airflow to S3, Glue catalog, Athena and dbt', caption: 'Architecture: Airflow → S3 → Glue → Athena → dbt → BI.' },
+      { alt: 'dbt lineage graph from sources to marts', caption: 'dbt lineage from raw sources to the daily mart.' },
+    ],
+    files: [
+      {
+        name: 'dags/taxi_elt.py',
+        lang: 'python',
+        code: `"""Monthly NYC taxi ELT: download -> S3 raw -> Glue crawler -> dbt build."""
+from datetime import datetime
+
+import boto3
+import requests
+from airflow import DAG
+from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
+from airflow.providers.amazon.aws.operators.glue_crawler import GlueCrawlerOperator
+
+BUCKET = "bk-data-lake"
+SOURCE = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_{ym}.parquet"
+
+
+def land_raw(ds: str, **_) -> str:
+    """Download one month and upload it to s3://bucket/raw/taxi/year=/month=/."""
+    ym = ds[:7]  # the logical date's YYYY-MM
+    year, month = ym.split("-")
+    resp = requests.get(SOURCE.format(ym=ym), timeout=120)
+    resp.raise_for_status()
+    key = f"raw/taxi/year={year}/month={month}/trips.parquet"
+    boto3.client("s3").put_object(Bucket=BUCKET, Key=key, Body=resp.content)
+    return key  # same key on rerun, so the load is idempotent
+
+
+with DAG(
+    dag_id="taxi_elt",
+    start_date=datetime(2024, 1, 1),
+    schedule="@monthly",
+    catchup=True,
+    max_active_runs=1,
+    default_args={"retries": 2},
+    tags=["elt", "aws", "dbt"],
+) as dag:
+    land = PythonOperator(task_id="land_raw", python_callable=land_raw)
+
+    crawl = GlueCrawlerOperator(
+        task_id="glue_crawl",
+        config={"Name": "taxi_raw_crawler"},
+        wait_for_completion=True,
+    )
+
+    dbt_build = BashOperator(
+        task_id="dbt_build",
+        bash_command=(
+            "cd /opt/dbt/taxi && "
+            "dbt build --select +fct_trips_daily --vars '{month: {{ ds[:7] }}}'"
+        ),
+    )
+
+    land >> crawl >> dbt_build`,
+      },
+      {
+        name: 'models/marts/fct_trips_daily.sql',
+        lang: 'sql',
+        code: `-- Daily trip facts, built incrementally so each run only adds the new month.
+{{ config(
+    materialized = 'incremental',
+    incremental_strategy = 'insert_overwrite',
+    partitioned_by = ['trip_month'],
+    table_type = 'iceberg' if var('use_iceberg', false) else 'hive'
+) }}
+
+WITH trips AS (
+    SELECT *
+    FROM {{ ref('stg_taxi__trips') }}
+    {% if is_incremental() %}
+    WHERE trip_month = '{{ var("month") }}'
+    {% endif %}
+)
+
+SELECT
+    CAST(pickup_at AS DATE)                AS trip_date,
+    pickup_zone_id,
+    COUNT(*)                               AS trips,
+    ROUND(SUM(total_amount), 2)            AS revenue,
+    ROUND(AVG(trip_distance_miles), 2)     AS avg_distance_miles,
+    ROUND(AVG(date_diff('minute', pickup_at, dropoff_at)), 1) AS avg_minutes,
+    trip_month
+FROM trips
+GROUP BY 1, 2, trip_month`,
+      },
+      {
+        name: 'models/staging/stg_taxi__trips.sql',
+        lang: 'sql',
+        code: `-- Clean and type the raw Parquet data. One row per valid trip.
+WITH source AS (
+    SELECT * FROM {{ source('raw', 'taxi') }}
+)
+
+SELECT
+    CAST(tpep_pickup_datetime AS TIMESTAMP)   AS pickup_at,
+    CAST(tpep_dropoff_datetime AS TIMESTAMP)  AS dropoff_at,
+    CAST(pulocationid AS INTEGER)             AS pickup_zone_id,
+    CAST(dolocationid AS INTEGER)             AS dropoff_zone_id,
+    CAST(trip_distance AS DOUBLE)             AS trip_distance_miles,
+    CAST(total_amount AS DECIMAL(10, 2))      AS total_amount,
+    year || '-' || month                      AS trip_month
+FROM source
+WHERE tpep_dropoff_datetime > tpep_pickup_datetime   -- drop impossible trips
+  AND trip_distance BETWEEN 0.1 AND 200
+  AND total_amount >= 0`,
+      },
+    ],
+    // PLACEHOLDER sample output
+    results: {
+      caption: 'Sample rows from fct_trips_daily in Athena',
+      columns: ['trip_date', 'pickup_zone_id', 'trips', 'revenue', 'avg_distance_miles', 'avg_minutes'],
+      rows: [
+        ['2024-03-01', 132, 5412, '412,380.55', 16.84, 38.2],
+        ['2024-03-01', 161, 4988, '118,204.10', 2.11, 14.6],
+        ['2024-03-01', 237, 4731, '96,540.25', 1.74, 12.9],
+      ],
+    },
+  },
   {
     id: 'retail-sales',
     title: 'Retail Sales Analysis',
@@ -44,7 +194,7 @@ export const projects: Project[] = [
     summary: 'Month-over-month revenue growth with a CTE and LAG(), turned into a one-page pandas report.',
     skills: ['SQL', 'Python', 'pandas'],
     repo: 'https://github.com/briankelley-it/retail-sales-analysis', // PLACEHOLDER repo URL
-    featured: true,
+    featured: false,
     // PLACEHOLDER metrics: replace with your own numbers
     metrics: [
       { value: '24', label: 'months of orders analysed' },

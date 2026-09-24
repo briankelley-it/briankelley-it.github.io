@@ -18,15 +18,20 @@ export const journey: JourneyStep[] = [
     body: 'Went deep on SQL: joins, CTEs, window functions and indexes in PostgreSQL, MySQL and SQLite. Learned to read EXPLAIN plans and to design schemas in third normal form.',
   },
   {
+    label: 'Pipelines',
+    title: 'Data engineering stack',
+    body: 'Moved from scripts to real pipelines: landed data in S3, catalogued it with Glue, queried it with Athena, transformed it with dbt and scheduled it with Airflow, all versioned in Git with CI.',
+  },
+  {
     label: 'Projects',
     title: 'Real projects',
-    body: 'Built the five projects on this site end to end: an analysis report, a database design, an ETL pipeline on a schedule, a query tune-up and a job market tracker.',
+    body: 'Built the projects on this site end to end: an AWS ELT pipeline with dbt and Airflow, an ETL pipeline on a schedule, a database design, a query tune-up, an analysis report and a job market tracker.',
   },
   {
     label: 'Now',
     title: 'Looking for my first role',
-    body: 'Applying for Junior Data Analyst, SQL Developer and Python Developer roles while I keep building and learning.',
+    body: 'Applying for Junior Data Engineer roles while I keep building: next up are Trino, Apache Iceberg and data catalogs.',
   },
 ]
 
-export const learningNow = ['dbt fundamentals', 'Airflow basics', 'Docker', 'Power BI']
+export const learningNow = ['Trino', 'Apache Iceberg', 'DataHub (catalog & lineage)', 'Docker', 'Power BI / Tableau']

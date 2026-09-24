@@ -5,7 +5,7 @@ export const site = {
   name: 'Brian Kelley',
   initials: 'BK',
   tagline: 'SQL & Python',
-  availability: 'Open to junior roles · remote or on-site',
+  availability: 'Open to Junior Data Engineer roles · remote',
 
   // PLACEHOLDER: your real email address
   email: 'brian.kelley@email.com',
@@ -16,13 +16,13 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/your-linkedin-handle',
   linkedinLabel: 'linkedin.com/in/your-linkedin-handle',
 
-  roles: 'Junior Data Analyst · SQL Developer · Python Developer',
+  roles: 'Junior Data Engineer · Data Analyst · SQL Developer',
 }
 
 export const hero = {
-  title: "Hi, I'm Brian. I write SQL and Python that turns messy data into clear answers.",
+  title: "Hi, I'm Brian. I build data pipelines that turn messy data into clear answers.",
   intro:
-    "I'm a self-taught developer looking for my first role as a Junior Data Analyst, SQL Developer or Python Developer. Every project here is something I planned, built, broke and fixed myself.",
+    "I'm a self-taught data engineer looking for my first role. I design and build ETL / ELT pipelines with Python, SQL, dbt and Airflow on AWS, and model the data so analysts and BI tools can use it. Every project here is something I planned, built, broke and fixed myself.",
   imageAlt: 'Illustrated portrait of Brian Kelley',
 }
 
@@ -30,22 +30,22 @@ export const about = [
   {
     title: "Where I'm at",
     body:
-      "I taught myself SQL and Python by building real things instead of just watching tutorials. I'm comfortable designing a schema, writing the queries that answer questions about it, and automating the boring parts with Python.",
+      "I taught myself data engineering by building real pipelines instead of just watching tutorials. I'm comfortable pulling data from APIs and files, landing it in S3, transforming it with SQL and dbt, and scheduling the whole thing with Airflow.",
   },
   {
     title: 'How I work',
     body:
-      "I start with the question, sketch the data on paper, then build in small steps I can test. When something breaks I read the error, check EXPLAIN or the logs, and write down what I learned so I don't repeat it.",
+      "I start from the question the data has to answer, model the tables on paper, then build in small tested steps. Pipelines are idempotent, models have dbt tests, and everything lives in Git with CI. When something breaks I read the logs and the query plan, fix it, and write down what I learned.",
   },
   {
     title: "What I'm looking for",
     body:
-      "A junior role on a team that works with data every day, where I can ship useful queries and scripts from week one and keep learning from people who have done this longer than me. Remote or on-site both work.",
+      "A Junior Data Engineer role on a team that owns its pipelines end to end (\"you build it, you own it\"), where I can work with engineers, BI specialists and business stakeholders, ship useful work early, and keep learning from people who have done this longer than me.",
   },
 ]
 
 export const contact = {
   title: "Let's talk",
   body:
-    "If you're hiring for a junior data, SQL or Python role, I'd love to hear from you. Send me an email and I'll get back to you within a day. Happy to walk through any project here on a call.",
+    "If you're hiring a junior data engineer, I'd love to hear from you. Send me an email and I'll get back to you within a day. Happy to walk through any project here on a call.",
 }

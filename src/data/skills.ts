@@ -3,21 +3,25 @@ export type SkillGroup = { title: string; level: string; items: string[] }
 
 export const skills: SkillGroup[] = [
   {
-    title: 'SQL',
+    title: 'SQL & modeling',
     level: 'Strongest',
     items: [
-      'PostgreSQL', 'MySQL', 'SQLite', 'Joins & subqueries', 'CTEs', 'Window functions',
-      'Indexing & EXPLAIN', 'Schema design / 3NF', 'Views & constraints',
+      'PostgreSQL', 'MySQL', 'SQLite', 'Athena (Presto SQL)', 'CTEs', 'Window functions',
+      'Indexing & EXPLAIN', 'Dimensional modeling', 'Schema design / 3NF', 'Views & constraints',
     ],
   },
   {
-    title: 'Python',
+    title: 'Python & pipelines',
     level: 'Daily use',
-    items: ['pandas', 'SQLAlchemy', 'requests', 'pytest', 'argparse', 'matplotlib', 'Jupyter', 'Regex'],
+    items: [
+      'Python', 'pandas', 'ETL / ELT', 'Airflow', 'dbt Core', 'boto3', 'requests', 'SQLAlchemy', 'pytest', 'Parquet / CSV / JSON',
+    ],
   },
   {
-    title: 'Tools',
-    level: 'Comfortable',
-    items: ['Git & GitHub', 'VS Code', 'Linux command line', 'cron', 'CSV / JSON', 'Excel', 'Docker (learning)'],
+    title: 'Cloud & tooling',
+    level: 'Hands-on',
+    items: [
+      'AWS S3', 'AWS Glue', 'AWS Athena', 'Git & GitHub', 'GitHub Actions CI / CD', 'Linux command line', 'cron', 'Docker (learning)',
+    ],
   },
 ]
