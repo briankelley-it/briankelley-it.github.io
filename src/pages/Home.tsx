@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react'
-import { Icon } from '../components/Icon'
+import { GithubIcon, Icon } from '../components/Icon'
 import { ProjectCard } from '../components/ProjectCard'
 import { asset } from '../config'
 import { projects } from '../data/projects'
@@ -25,7 +25,10 @@ export function Home() {
             <a className="btn btn-primary marks" href="#projects">
               See my projects <Icon icon={ArrowRight} size={16} />
             </a>
-            <a className="btn btn-secondary" href="#lab">Try the SQL demo</a>
+            <a className="btn btn-secondary" href={site.github} target="_blank" rel="noopener noreferrer">
+              <GithubIcon size={16} /> View my GitHub
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
           </div>
         </div>
         <div className="hero-art" data-reveal>
