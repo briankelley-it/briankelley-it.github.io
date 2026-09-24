@@ -582,3 +582,9 @@ table.data td.null { color: var(--neutral-700); font-style: italic; }
 .code:not(.code-light) .run-btn:hover { background: #b5d9fd; border-color: #b5d9fd; }
 .run-btn:disabled { opacity: 0.7; }
 .brand-name { white-space: nowrap; }
+@media (max-width: 360px) {
+  .brand { gap: 8px; }
+  .monogram { width: 32px; height: 32px; font-size: 16px; }
+  .brand-name { font-size: 19px; }
+  .nav-tools { gap: 6px; }
+}
