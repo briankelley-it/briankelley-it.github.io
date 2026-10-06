@@ -79,7 +79,7 @@ nav a:hover {
     border-radius: 50%;
     margin: 0 auto 24px;
     border-width: 3px;
-    border-color: #88a0b0;
+    border-color: #1a388b;
 }
 .hero h1 {
     font-size: clamp(34px, 5.5vw, 54px);
