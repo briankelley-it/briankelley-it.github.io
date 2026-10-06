@@ -1,75 +1,31 @@
-# Brian Kelley · Developer Portfolio
+# Brian Kelley — Simple Python Developer Portfolio
 
-Personal portfolio for a self-taught SQL and Python developer. Built with Vite, React and TypeScript, plain CSS with custom properties, and no UI library.
+A simple, single-column portfolio with a centered introduction, project descriptions, repository links, optional project screenshots, an about section, and contact information.
 
-Live site: https://briankelley-it.github.io
+## Open the website
 
-## Run it locally
+Extract the ZIP and open index.html in your browser. No installation or build step is needed. The page uses HTML and CSS only. Screenshot sections expand using built-in browser controls.
 
-```bash
-npm install
-npm run dev      # http://localhost:5173
-npm run build    # production build in dist/
-npm run preview  # serve the build
-```
+## Optional Python server
 
-## Editing content
+With Python 3.10 or newer installed, open a terminal in this folder and run:
 
-All text lives in `src/data/`. You never need to touch a component to change what the site says.
+    python server.py
 
-| File | What it controls |
-| --- | --- |
-| `src/data/site.ts` | Name, email, GitHub, LinkedIn, hero text, About columns, Contact copy |
-| `src/data/skills.ts` | The three skill cards on the home page |
-| `src/data/projects.ts` | The five projects: summary, tags, repo link, metrics, case study, code files, results table |
-| `src/data/queries.ts` | Query lab questions, SQL, result rows and "Why it works" notes, plus the schema list |
-| `src/data/journey.ts` | Learning timeline and the "Learning right now" tags |
-| `src/data/certs.ts` | Certifications grid |
-| `src/config.ts` | Code theme (`'dark'` or `'light'`), resume filename, theme storage key |
+Then visit http://127.0.0.1:8000. On Windows, you can also use py server.py. To choose another port, run python server.py --port 8080.
 
-### Adding a project
+The server includes GET /api/projects and GET /api/health. These are optional data endpoints; the page itself is static. The server is intended for local development.
 
-Add an object to the `projects` array in `src/data/projects.ts`. Set `featured: true` to show it on the home page. Every skill you list in `skills` is counted by the filter buttons automatically; add new filter names to `projectFilters` if you want a button for them.
+## Customize or publish
 
-### Images
+Edit index.html to change the text, projects, or contact information. Edit styles.css to adjust spacing, colors, and fonts. No JavaScript, external fonts, animations, trackers, or third-party services are required.
 
-Put images in `public/assets/` and reference them without a leading slash:
+To publish on GitHub Pages or another static host, upload index.html, styles.css, and the assets folder. The Python server and projects.json are optional and are not needed for static hosting. Nothing has been published or pushed to your repositories as part of this delivery.
 
-- Profile illustration: `public/assets/brian-profile.png`
-- Project screenshot (16:10): set `screenshot: 'assets/projects/retail.png'`
-- Process images (4:3): set `src` on each item in `process`
+## Project sources
 
-## Placeholders to replace
+TaskForge: https://github.com/briankelley-it/TaskForge
+LedgerAPI: https://github.com/briankelley-it/LedgerAPI
+OpsKit: https://github.com/briankelley-it/OpsKit
 
-Search the code for `PLACEHOLDER` to find each one.
-
-- [ ] Email address in `site.ts` (currently `brian.kelley@email.com`)
-- [ ] LinkedIn URL in `site.ts`
-- [ ] Repo URL for each project in `projects.ts`
-- [ ] `public/Brian-Kelley-Resume.pdf` (currently a placeholder page)
-- [ ] Project screenshots and process images (currently empty slots)
-- [ ] Certification names, issuers and years in `certs.ts`
-- [ ] **Every metric and sample result in `projects.ts`.** Replace them with numbers from your own runs so everything on the site is accurate.
-- [ ] `public/assets/brian-profile.png` if you want your own illustration or photo
-
-## Deploying
-
-### GitHub Pages (set up already)
-
-`.github/workflows/deploy.yml` builds the site and publishes it on every push to `main`.
-
-1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions** (one time).
-2. Push to `main`. The **Actions** tab shows the build; the site updates a minute or two later.
-
-You can also edit a data file straight on github.com (pencil icon → Commit changes) and the site redeploys by itself.
-
-### Vercel
-
-Import the repo in Vercel. It detects Vite: build command `npm run build`, output directory `dist`. No other settings are needed.
-
-## Notes
-
-- Hash routing (`#home`, `#projects`, `#projects/<id>`, `#lab`, `#learning`, `#contact`) means every page has a shareable URL and works on any static host.
-- The theme follows the visitor's system setting on first visit, then remembers their choice in `localStorage` under `bk-portfolio-theme`.
-- All motion turns off when the visitor has "reduce motion" enabled.
-- In light mode, solid buttons use accent-700 (`#416180`) rather than `#5980a6`, and code comments use `#8497ab`, so all text passes the 4.5:1 contrast target.
+Descriptions and screenshots are based on your project repositories. OpsKit is linked without a feature description because its public README currently contains only its title. Screenshots show the project interfaces, not live demos. Reference contact information has not been added to this website.
