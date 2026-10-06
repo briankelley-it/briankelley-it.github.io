@@ -1,31 +1,62 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brian Kelley · SQL &amp; Python Developer</title>
-    <meta name="description" content="Brian Kelley is a self-taught SQL and Python developer. Projects, a live-looking SQL demo, and how to get in touch." />
-    <meta name="theme-color" content="#f2f2f3" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Barlow:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" />
-    <script>
-      // Runs before first paint: pick the theme and hide reveal targets, so there is no flash.
-      (function () {
-        var d = document.documentElement, t;
-        try { t = localStorage.getItem('bk-portfolio-theme'); } catch (e) {}
-        if (t !== 'light' && t !== 'dark') {
-          t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-        d.setAttribute('data-theme', t);
-        d.classList.add('js');
-      })();
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <noscript>This portfolio needs JavaScript to run. You can still reach Brian at brian.kelley@email.com.</noscript>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Brian Kelley, a self-taught Python developer in Cypress, Texas. Personal projects built with Django, PostgreSQL, and REST APIs.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Brian Kelley | Python Developer</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header container">
+    <a class="site-name" href="#home">Brian Kelley</a>
+    <nav aria-label="Main navigation"><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+  </header>
+  <main id="main" class="container">
+    <section id="home" class="hero" aria-labelledby="hero-title">
+      <img class="profile-photo" src="assets/github-profile.jpg" width="88" height="88" alt="Brian Kelley’s GitHub profile image: a blue galaxy">
+      <h1 id="hero-title">Hi, I’m Brian Kelley.</h1>
+      <p class="hero-role">Python developer</p>
+      <p class="hero-intro">I build web applications and APIs with Python and Django. I’m self-taught, based in Cypress, Texas, and looking for my first developer role.</p>
+      <div class="hero-links"><a class="button" href="#projects">View my projects</a><a href="https://github.com/briankelley-it" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+    </section>
+    <section id="projects" aria-labelledby="projects-title">
+      <h2 id="projects-title">Projects</h2>
+      <p class="section-intro">Personal projects I’ve built while learning Python development.</p>
+      <article class="project">
+        <h3>TaskForge</h3>
+        <p>A task management app for small teams. It includes a Kanban board, task assignments, comments, project invitations, and CSV export.</p>
+        <p>I worked on project permissions, database transactions, and automated tests to keep task updates consistent and project data accessible to the right users.</p>
+        <p class="tech">Python · Django · PostgreSQL · HTMX · Docker</p>
+        <a class="repo-link" href="https://github.com/briankelley-it/TaskForge" target="_blank" rel="noopener noreferrer">View TaskForge on GitHub</a>
+        <details><summary>View project screenshot</summary><img src="assets/taskforge-signup.jpg" loading="lazy" alt="TaskForge’s sign-up page, from the project repository"></details>
+      </article>
+      <article class="project">
+        <h3>LedgerAPI</h3>
+        <p>An expense-tracking REST API with authentication, spending categories, monthly budgets, and reports.</p>
+        <p>I used user-scoped queries to separate accounts, decimal arithmetic for monetary amounts, and SQL subqueries for budget totals. The project includes OpenAPI documentation and automated tests.</p>
+        <p class="tech">Python · Django REST Framework · PostgreSQL · JWT · OpenAPI</p>
+        <a class="repo-link" href="https://github.com/briankelley-it/LedgerAPI" target="_blank" rel="noopener noreferrer">View LedgerAPI on GitHub</a>
+        <details><summary>View project screenshot</summary><img src="assets/ledgerapi-swagger.png" loading="lazy" alt="LedgerAPI’s Swagger documentation, from the project repository"></details>
+      </article>
+      <p class="more-repos">You can also find <a href="https://github.com/briankelley-it/OpsKit" target="_blank" rel="noopener noreferrer">OpsKit</a> and follow my progress on <a href="https://github.com/briankelley-it" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+    </section>
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About me</h2>
+      <p>I graduated from Cypress Woods High School and started learning Python by building things. I enjoy figuring out how the pieces fit together, from the database to the page someone uses.</p>
+      <p>I’m motivated to keep improving. When I get stuck, I read the documentation, work through the problem, and try again. I’m excited to join a team where I can contribute, ask questions, and learn from experienced developers.</p>
+      <h3 class="skills-heading">Tools I use</h3>
+      <p>Python, Django, Django REST Framework, SQL, PostgreSQL, HTML, CSS, HTMX, Git, Docker, pytest, and GitHub Actions.</p>
+    </section>
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact</h2>
+      <p>If you’re hiring an entry-level Python developer or would like to talk about my projects, feel free to reach out.</p>
+      <ul class="contact-list"><li><a href="mailto:briankelley141@gmail.com">briankelley141@gmail.com</a></li><li><a href="tel:+12544992121">(254) 499-2121</a></li><li><a href="https://github.com/briankelley-it" target="_blank" rel="noopener noreferrer">github.com/briankelley-it</a></li></ul>
+    </section>
+  </main>
+  <footer class="container"><p>Brian Kelley · Cypress, Texas</p><a href="#home">Back to top</a></footer>
+</body>
 </html>
