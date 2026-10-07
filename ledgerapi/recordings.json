@@ -1,0 +1,1021 @@
+{
+ "credentials": {
+  "email": "demo@ledgerapi.dev",
+  "password": "ledger-demo-2026"
+ },
+ "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzkxMzczODM2LCJpYXQiOjE3OTEzNzI5MzYsImp0aSI6IjZlZjhkMTI1MzIwZDQ5ODNiMWY3ZTY5NTZhNDE0ZTNhIiwidXNlcl9pZCI6IjEifQ.CirhGPTrLkbUPo8PdG64l951OuWgezDQAUS2X4miBco",
+ "unauthorized": {
+  "status": 401,
+  "body": {
+   "error": {
+    "code": "not_authenticated",
+    "message": "Authentication credentials were not provided.",
+    "details": null
+   }
+  }
+ },
+ "responses": {
+  "GET /api/v1/health/": {
+   "status": 200,
+   "body": {
+    "status": "ok",
+    "database": "ok"
+   }
+  },
+  "POST /api/v1/auth/register/": {
+   "status": 201,
+   "body": {
+    "id": 1,
+    "email": "demo@ledgerapi.dev",
+    "date_joined": "2026-10-07T11:35:35.804683Z"
+   }
+  },
+  "POST /api/v1/auth/token/": {
+   "status": 200,
+   "body": {
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc5MTk3NzczNiwiaWF0IjoxNzkxMzcyOTM2LCJqdGkiOiJhMGJkYzYyODMwMDc0NTU4YTQ2NDUwNWJlOGFjODg3YiIsInVzZXJfaWQiOiIxIn0.WmMiqAH8WHQZb4b9Q4WsSB1DMtP7iiJJVRFyNA9KKgI",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzkxMzczODM2LCJpYXQiOjE3OTEzNzI5MzYsImp0aSI6IjZlZjhkMTI1MzIwZDQ5ODNiMWY3ZTY5NTZhNDE0ZTNhIiwidXNlcl9pZCI6IjEifQ.CirhGPTrLkbUPo8PdG64l951OuWgezDQAUS2X4miBco"
+   }
+  },
+  "POST /api/v1/auth/token/refresh/": {
+   "status": 200,
+   "body": {
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzkxMzczODM2LCJpYXQiOjE3OTEzNzI5MzYsImp0aSI6ImQwM2Q4YTg4NjNkOTRlOTNhNDg2ZGRlNzdlMGM0MWQ4IiwidXNlcl9pZCI6IjEifQ.tra2ZlR933OOler9NeGA7DLag-AQ0dzdFLtAhtioPt4"
+   }
+  },
+  "POST /api/v1/categories/": {
+   "status": 201,
+   "body": {
+    "id": 4,
+    "name": "Dining out",
+    "color": "#EF4444",
+    "created_at": "2026-10-07T11:35:36.514963Z",
+    "updated_at": "2026-10-07T11:35:36.514963Z"
+   }
+  },
+  "POST /api/v1/expenses/": {
+   "status": 201,
+   "body": {
+    "id": 12,
+    "amount": "96.50",
+    "currency": "USD",
+    "description": "September dining",
+    "date": "2026-09-26",
+    "category": 4,
+    "created_at": "2026-10-07T11:35:36.574495Z",
+    "updated_at": "2026-10-07T11:35:36.574495Z"
+   }
+  },
+  "POST /api/v1/budgets/": {
+   "status": 201,
+   "body": {
+    "id": 3,
+    "category": 4,
+    "month": "2026-10",
+    "limit": "80.00",
+    "currency": "USD",
+    "spent": "89.80",
+    "remaining": "-9.80",
+    "over_budget": true,
+    "created_at": "2026-10-07T11:35:36.597296Z",
+    "updated_at": "2026-10-07T11:35:36.597296Z"
+   }
+  },
+  "PUT /api/v1/categories/4/": {
+   "status": 200,
+   "body": {
+    "id": 4,
+    "name": "Dining out",
+    "color": "#EF4444",
+    "created_at": "2026-10-07T11:35:36.514963Z",
+    "updated_at": "2026-10-07T11:35:36.605623Z"
+   }
+  },
+  "PATCH /api/v1/categories/4/": {
+   "status": 200,
+   "body": {
+    "id": 4,
+    "name": "Dining out",
+    "color": "#EF4444",
+    "created_at": "2026-10-07T11:35:36.514963Z",
+    "updated_at": "2026-10-07T11:35:36.605623Z"
+   }
+  },
+  "DELETE /api/v1/categories/5/": {
+   "status": 204,
+   "body": null
+  },
+  "PATCH /api/v1/expenses/12/": {
+   "status": 200,
+   "body": {
+    "id": 12,
+    "amount": "96.50",
+    "currency": "USD",
+    "description": "September dining",
+    "date": "2026-09-26",
+    "category": 4,
+    "created_at": "2026-10-07T11:35:36.574495Z",
+    "updated_at": "2026-10-07T11:35:36.625316Z"
+   }
+  },
+  "PUT /api/v1/expenses/12/": {
+   "status": 200,
+   "body": {
+    "id": 12,
+    "amount": "96.50",
+    "currency": "USD",
+    "description": "September dining",
+    "date": "2026-09-26",
+    "category": 4,
+    "created_at": "2026-10-07T11:35:36.574495Z",
+    "updated_at": "2026-10-07T11:35:36.630861Z"
+   }
+  },
+  "DELETE /api/v1/expenses/13/": {
+   "status": 204,
+   "body": null
+  },
+  "PATCH /api/v1/budgets/3/": {
+   "status": 200,
+   "body": {
+    "id": 3,
+    "category": 4,
+    "month": "2026-10",
+    "limit": "80.00",
+    "currency": "USD",
+    "spent": "89.80",
+    "remaining": "-9.80",
+    "over_budget": true,
+    "created_at": "2026-10-07T11:35:36.597296Z",
+    "updated_at": "2026-10-07T11:35:36.648134Z"
+   }
+  },
+  "PUT /api/v1/budgets/3/": {
+   "status": 200,
+   "body": {
+    "id": 3,
+    "category": 4,
+    "month": "2026-10",
+    "limit": "80.00",
+    "currency": "USD",
+    "spent": "89.80",
+    "remaining": "-9.80",
+    "over_budget": true,
+    "created_at": "2026-10-07T11:35:36.597296Z",
+    "updated_at": "2026-10-07T11:35:36.656306Z"
+   }
+  },
+  "DELETE /api/v1/budgets/4/": {
+   "status": 204,
+   "body": null
+  },
+  "GET /api/v1/auth/me/": {
+   "status": 200,
+   "body": {
+    "id": 1,
+    "email": "demo@ledgerapi.dev",
+    "date_joined": "2026-10-07T11:35:35.804683Z"
+   }
+  },
+  "GET /api/v1/categories/": {
+   "status": 200,
+   "body": {
+    "count": 4,
+    "next": null,
+    "previous": null,
+    "results": [
+     {
+      "id": 4,
+      "name": "Dining out",
+      "color": "#EF4444",
+      "created_at": "2026-10-07T11:35:36.514963Z",
+      "updated_at": "2026-10-07T11:35:36.605623Z"
+     },
+     {
+      "id": 1,
+      "name": "Groceries",
+      "color": "#22C55E",
+      "created_at": "2026-10-07T11:35:36.500682Z",
+      "updated_at": "2026-10-07T11:35:36.500682Z"
+     },
+     {
+      "id": 2,
+      "name": "Rent",
+      "color": "#6366F1",
+      "created_at": "2026-10-07T11:35:36.500682Z",
+      "updated_at": "2026-10-07T11:35:36.500682Z"
+     },
+     {
+      "id": 3,
+      "name": "Transport",
+      "color": "#F59E0B",
+      "created_at": "2026-10-07T11:35:36.500682Z",
+      "updated_at": "2026-10-07T11:35:36.500682Z"
+     }
+    ]
+   }
+  },
+  "GET /api/v1/categories/4/": {
+   "status": 200,
+   "body": {
+    "id": 4,
+    "name": "Dining out",
+    "color": "#EF4444",
+    "created_at": "2026-10-07T11:35:36.514963Z",
+    "updated_at": "2026-10-07T11:35:36.605623Z"
+   }
+  },
+  "GET /api/v1/categories/1/": {
+   "status": 200,
+   "body": {
+    "id": 1,
+    "name": "Groceries",
+    "color": "#22C55E",
+    "created_at": "2026-10-07T11:35:36.500682Z",
+    "updated_at": "2026-10-07T11:35:36.500682Z"
+   }
+  },
+  "GET /api/v1/categories/2/": {
+   "status": 200,
+   "body": {
+    "id": 2,
+    "name": "Rent",
+    "color": "#6366F1",
+    "created_at": "2026-10-07T11:35:36.500682Z",
+    "updated_at": "2026-10-07T11:35:36.500682Z"
+   }
+  },
+  "GET /api/v1/categories/3/": {
+   "status": 200,
+   "body": {
+    "id": 3,
+    "name": "Transport",
+    "color": "#F59E0B",
+    "created_at": "2026-10-07T11:35:36.500682Z",
+    "updated_at": "2026-10-07T11:35:36.500682Z"
+   }
+  },
+  "GET /api/v1/expenses/": {
+   "status": 200,
+   "body": {
+    "count": 12,
+    "next": null,
+    "previous": null,
+    "results": [
+     {
+      "id": 8,
+      "amount": "19.99",
+      "currency": "USD",
+      "description": "Phone stand",
+      "date": "2026-10-07",
+      "category": null,
+      "created_at": "2026-10-07T11:35:36.551199Z",
+      "updated_at": "2026-10-07T11:35:36.551199Z"
+     },
+     {
+      "id": 7,
+      "amount": "58.00",
+      "currency": "USD",
+      "description": "Dinner with friends",
+      "date": "2026-10-06",
+      "category": 4,
+      "created_at": "2026-10-07T11:35:36.544047Z",
+      "updated_at": "2026-10-07T11:35:36.544047Z"
+     },
+     {
+      "id": 6,
+      "amount": "2.75",
+      "currency": "USD",
+      "description": "Bus fare",
+      "date": "2026-10-06",
+      "category": 3,
+      "created_at": "2026-10-07T11:35:36.544047Z",
+      "updated_at": "2026-10-07T11:35:36.544047Z"
+     },
+     {
+      "id": 5,
+      "amount": "64.25",
+      "currency": "USD",
+      "description": "Farmers market and groceries",
+      "date": "2026-10-05",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.535421Z",
+      "updated_at": "2026-10-07T11:35:36.535421Z"
+     },
+     {
+      "id": 4,
+      "amount": "31.80",
+      "currency": "USD",
+      "description": "Thai takeout",
+      "date": "2026-10-04",
+      "category": 4,
+      "created_at": "2026-10-07T11:35:36.535421Z",
+      "updated_at": "2026-10-07T11:35:36.535421Z"
+     },
+     {
+      "id": 3,
+      "amount": "42.15",
+      "currency": "USD",
+      "description": "Gas",
+      "date": "2026-10-03",
+      "category": 3,
+      "created_at": "2026-10-07T11:35:36.530333Z",
+      "updated_at": "2026-10-07T11:35:36.530333Z"
+     },
+     {
+      "id": 2,
+      "amount": "86.40",
+      "currency": "USD",
+      "description": "Weekly groceries",
+      "date": "2026-10-02",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.524634Z",
+      "updated_at": "2026-10-07T11:35:36.524634Z"
+     },
+     {
+      "id": 1,
+      "amount": "1450.00",
+      "currency": "USD",
+      "description": "October rent",
+      "date": "2026-10-01",
+      "category": 2,
+      "created_at": "2026-10-07T11:35:36.514963Z",
+      "updated_at": "2026-10-07T11:35:36.514963Z"
+     },
+     {
+      "id": 12,
+      "amount": "96.50",
+      "currency": "USD",
+      "description": "September dining",
+      "date": "2026-09-26",
+      "category": 4,
+      "created_at": "2026-10-07T11:35:36.574495Z",
+      "updated_at": "2026-10-07T11:35:36.630861Z"
+     },
+     {
+      "id": 11,
+      "amount": "118.30",
+      "currency": "USD",
+      "description": "September gas",
+      "date": "2026-09-20",
+      "category": 3,
+      "created_at": "2026-10-07T11:35:36.569778Z",
+      "updated_at": "2026-10-07T11:35:36.569778Z"
+     },
+     {
+      "id": 10,
+      "amount": "312.60",
+      "currency": "USD",
+      "description": "September groceries",
+      "date": "2026-09-15",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.563151Z",
+      "updated_at": "2026-10-07T11:35:36.563151Z"
+     },
+     {
+      "id": 9,
+      "amount": "1450.00",
+      "currency": "USD",
+      "description": "September rent",
+      "date": "2026-09-01",
+      "category": 2,
+      "created_at": "2026-10-07T11:35:36.560057Z",
+      "updated_at": "2026-10-07T11:35:36.560057Z"
+     }
+    ]
+   }
+  },
+  "GET /api/v1/expenses/8/": {
+   "status": 200,
+   "body": {
+    "id": 8,
+    "amount": "19.99",
+    "currency": "USD",
+    "description": "Phone stand",
+    "date": "2026-10-07",
+    "category": null,
+    "created_at": "2026-10-07T11:35:36.551199Z",
+    "updated_at": "2026-10-07T11:35:36.551199Z"
+   }
+  },
+  "GET /api/v1/expenses/7/": {
+   "status": 200,
+   "body": {
+    "id": 7,
+    "amount": "58.00",
+    "currency": "USD",
+    "description": "Dinner with friends",
+    "date": "2026-10-06",
+    "category": 4,
+    "created_at": "2026-10-07T11:35:36.544047Z",
+    "updated_at": "2026-10-07T11:35:36.544047Z"
+   }
+  },
+  "GET /api/v1/expenses/6/": {
+   "status": 200,
+   "body": {
+    "id": 6,
+    "amount": "2.75",
+    "currency": "USD",
+    "description": "Bus fare",
+    "date": "2026-10-06",
+    "category": 3,
+    "created_at": "2026-10-07T11:35:36.544047Z",
+    "updated_at": "2026-10-07T11:35:36.544047Z"
+   }
+  },
+  "GET /api/v1/expenses/5/": {
+   "status": 200,
+   "body": {
+    "id": 5,
+    "amount": "64.25",
+    "currency": "USD",
+    "description": "Farmers market and groceries",
+    "date": "2026-10-05",
+    "category": 1,
+    "created_at": "2026-10-07T11:35:36.535421Z",
+    "updated_at": "2026-10-07T11:35:36.535421Z"
+   }
+  },
+  "GET /api/v1/expenses/4/": {
+   "status": 200,
+   "body": {
+    "id": 4,
+    "amount": "31.80",
+    "currency": "USD",
+    "description": "Thai takeout",
+    "date": "2026-10-04",
+    "category": 4,
+    "created_at": "2026-10-07T11:35:36.535421Z",
+    "updated_at": "2026-10-07T11:35:36.535421Z"
+   }
+  },
+  "GET /api/v1/expenses/3/": {
+   "status": 200,
+   "body": {
+    "id": 3,
+    "amount": "42.15",
+    "currency": "USD",
+    "description": "Gas",
+    "date": "2026-10-03",
+    "category": 3,
+    "created_at": "2026-10-07T11:35:36.530333Z",
+    "updated_at": "2026-10-07T11:35:36.530333Z"
+   }
+  },
+  "GET /api/v1/expenses/2/": {
+   "status": 200,
+   "body": {
+    "id": 2,
+    "amount": "86.40",
+    "currency": "USD",
+    "description": "Weekly groceries",
+    "date": "2026-10-02",
+    "category": 1,
+    "created_at": "2026-10-07T11:35:36.524634Z",
+    "updated_at": "2026-10-07T11:35:36.524634Z"
+   }
+  },
+  "GET /api/v1/expenses/1/": {
+   "status": 200,
+   "body": {
+    "id": 1,
+    "amount": "1450.00",
+    "currency": "USD",
+    "description": "October rent",
+    "date": "2026-10-01",
+    "category": 2,
+    "created_at": "2026-10-07T11:35:36.514963Z",
+    "updated_at": "2026-10-07T11:35:36.514963Z"
+   }
+  },
+  "GET /api/v1/expenses/12/": {
+   "status": 200,
+   "body": {
+    "id": 12,
+    "amount": "96.50",
+    "currency": "USD",
+    "description": "September dining",
+    "date": "2026-09-26",
+    "category": 4,
+    "created_at": "2026-10-07T11:35:36.574495Z",
+    "updated_at": "2026-10-07T11:35:36.630861Z"
+   }
+  },
+  "GET /api/v1/expenses/11/": {
+   "status": 200,
+   "body": {
+    "id": 11,
+    "amount": "118.30",
+    "currency": "USD",
+    "description": "September gas",
+    "date": "2026-09-20",
+    "category": 3,
+    "created_at": "2026-10-07T11:35:36.569778Z",
+    "updated_at": "2026-10-07T11:35:36.569778Z"
+   }
+  },
+  "GET /api/v1/expenses/10/": {
+   "status": 200,
+   "body": {
+    "id": 10,
+    "amount": "312.60",
+    "currency": "USD",
+    "description": "September groceries",
+    "date": "2026-09-15",
+    "category": 1,
+    "created_at": "2026-10-07T11:35:36.563151Z",
+    "updated_at": "2026-10-07T11:35:36.563151Z"
+   }
+  },
+  "GET /api/v1/expenses/9/": {
+   "status": 200,
+   "body": {
+    "id": 9,
+    "amount": "1450.00",
+    "currency": "USD",
+    "description": "September rent",
+    "date": "2026-09-01",
+    "category": 2,
+    "created_at": "2026-10-07T11:35:36.560057Z",
+    "updated_at": "2026-10-07T11:35:36.560057Z"
+   }
+  },
+  "GET /api/v1/budgets/": {
+   "status": 200,
+   "body": {
+    "count": 3,
+    "next": null,
+    "previous": null,
+    "results": [
+     {
+      "id": 3,
+      "category": 4,
+      "month": "2026-10",
+      "limit": "80.00",
+      "currency": "USD",
+      "spent": "89.80",
+      "remaining": "-9.80",
+      "over_budget": true,
+      "created_at": "2026-10-07T11:35:36.597296Z",
+      "updated_at": "2026-10-07T11:35:36.656306Z"
+     },
+     {
+      "id": 1,
+      "category": 1,
+      "month": "2026-10",
+      "limit": "300.00",
+      "currency": "USD",
+      "spent": "150.65",
+      "remaining": "149.35",
+      "over_budget": false,
+      "created_at": "2026-10-07T11:35:36.582960Z",
+      "updated_at": "2026-10-07T11:35:36.582960Z"
+     },
+     {
+      "id": 2,
+      "category": 3,
+      "month": "2026-10",
+      "limit": "150.00",
+      "currency": "USD",
+      "spent": "44.90",
+      "remaining": "105.10",
+      "over_budget": false,
+      "created_at": "2026-10-07T11:35:36.589298Z",
+      "updated_at": "2026-10-07T11:35:36.589298Z"
+     }
+    ]
+   }
+  },
+  "GET /api/v1/budgets/3/": {
+   "status": 200,
+   "body": {
+    "id": 3,
+    "category": 4,
+    "month": "2026-10",
+    "limit": "80.00",
+    "currency": "USD",
+    "spent": "89.80",
+    "remaining": "-9.80",
+    "over_budget": true,
+    "created_at": "2026-10-07T11:35:36.597296Z",
+    "updated_at": "2026-10-07T11:35:36.656306Z"
+   }
+  },
+  "GET /api/v1/budgets/1/": {
+   "status": 200,
+   "body": {
+    "id": 1,
+    "category": 1,
+    "month": "2026-10",
+    "limit": "300.00",
+    "currency": "USD",
+    "spent": "150.65",
+    "remaining": "149.35",
+    "over_budget": false,
+    "created_at": "2026-10-07T11:35:36.582960Z",
+    "updated_at": "2026-10-07T11:35:36.582960Z"
+   }
+  },
+  "GET /api/v1/budgets/2/": {
+   "status": 200,
+   "body": {
+    "id": 2,
+    "category": 3,
+    "month": "2026-10",
+    "limit": "150.00",
+    "currency": "USD",
+    "spent": "44.90",
+    "remaining": "105.10",
+    "over_budget": false,
+    "created_at": "2026-10-07T11:35:36.589298Z",
+    "updated_at": "2026-10-07T11:35:36.589298Z"
+   }
+  },
+  "GET /api/v1/expenses/?category=1": {
+   "status": 200,
+   "body": {
+    "count": 3,
+    "next": null,
+    "previous": null,
+    "results": [
+     {
+      "id": 5,
+      "amount": "64.25",
+      "currency": "USD",
+      "description": "Farmers market and groceries",
+      "date": "2026-10-05",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.535421Z",
+      "updated_at": "2026-10-07T11:35:36.535421Z"
+     },
+     {
+      "id": 2,
+      "amount": "86.40",
+      "currency": "USD",
+      "description": "Weekly groceries",
+      "date": "2026-10-02",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.524634Z",
+      "updated_at": "2026-10-07T11:35:36.524634Z"
+     },
+     {
+      "id": 10,
+      "amount": "312.60",
+      "currency": "USD",
+      "description": "September groceries",
+      "date": "2026-09-15",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.563151Z",
+      "updated_at": "2026-10-07T11:35:36.563151Z"
+     }
+    ]
+   }
+  },
+  "GET /api/v1/expenses/?ordering=-amount": {
+   "status": 200,
+   "body": {
+    "count": 12,
+    "next": null,
+    "previous": null,
+    "results": [
+     {
+      "id": 1,
+      "amount": "1450.00",
+      "currency": "USD",
+      "description": "October rent",
+      "date": "2026-10-01",
+      "category": 2,
+      "created_at": "2026-10-07T11:35:36.514963Z",
+      "updated_at": "2026-10-07T11:35:36.514963Z"
+     },
+     {
+      "id": 9,
+      "amount": "1450.00",
+      "currency": "USD",
+      "description": "September rent",
+      "date": "2026-09-01",
+      "category": 2,
+      "created_at": "2026-10-07T11:35:36.560057Z",
+      "updated_at": "2026-10-07T11:35:36.560057Z"
+     },
+     {
+      "id": 10,
+      "amount": "312.60",
+      "currency": "USD",
+      "description": "September groceries",
+      "date": "2026-09-15",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.563151Z",
+      "updated_at": "2026-10-07T11:35:36.563151Z"
+     },
+     {
+      "id": 11,
+      "amount": "118.30",
+      "currency": "USD",
+      "description": "September gas",
+      "date": "2026-09-20",
+      "category": 3,
+      "created_at": "2026-10-07T11:35:36.569778Z",
+      "updated_at": "2026-10-07T11:35:36.569778Z"
+     },
+     {
+      "id": 12,
+      "amount": "96.50",
+      "currency": "USD",
+      "description": "September dining",
+      "date": "2026-09-26",
+      "category": 4,
+      "created_at": "2026-10-07T11:35:36.574495Z",
+      "updated_at": "2026-10-07T11:35:36.630861Z"
+     },
+     {
+      "id": 2,
+      "amount": "86.40",
+      "currency": "USD",
+      "description": "Weekly groceries",
+      "date": "2026-10-02",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.524634Z",
+      "updated_at": "2026-10-07T11:35:36.524634Z"
+     },
+     {
+      "id": 5,
+      "amount": "64.25",
+      "currency": "USD",
+      "description": "Farmers market and groceries",
+      "date": "2026-10-05",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.535421Z",
+      "updated_at": "2026-10-07T11:35:36.535421Z"
+     },
+     {
+      "id": 7,
+      "amount": "58.00",
+      "currency": "USD",
+      "description": "Dinner with friends",
+      "date": "2026-10-06",
+      "category": 4,
+      "created_at": "2026-10-07T11:35:36.544047Z",
+      "updated_at": "2026-10-07T11:35:36.544047Z"
+     },
+     {
+      "id": 3,
+      "amount": "42.15",
+      "currency": "USD",
+      "description": "Gas",
+      "date": "2026-10-03",
+      "category": 3,
+      "created_at": "2026-10-07T11:35:36.530333Z",
+      "updated_at": "2026-10-07T11:35:36.530333Z"
+     },
+     {
+      "id": 4,
+      "amount": "31.80",
+      "currency": "USD",
+      "description": "Thai takeout",
+      "date": "2026-10-04",
+      "category": 4,
+      "created_at": "2026-10-07T11:35:36.535421Z",
+      "updated_at": "2026-10-07T11:35:36.535421Z"
+     },
+     {
+      "id": 8,
+      "amount": "19.99",
+      "currency": "USD",
+      "description": "Phone stand",
+      "date": "2026-10-07",
+      "category": null,
+      "created_at": "2026-10-07T11:35:36.551199Z",
+      "updated_at": "2026-10-07T11:35:36.551199Z"
+     },
+     {
+      "id": 6,
+      "amount": "2.75",
+      "currency": "USD",
+      "description": "Bus fare",
+      "date": "2026-10-06",
+      "category": 3,
+      "created_at": "2026-10-07T11:35:36.544047Z",
+      "updated_at": "2026-10-07T11:35:36.544047Z"
+     }
+    ]
+   }
+  },
+  "GET /api/v1/expenses/?date_after=2026-10-01&date_before=2026-10-31": {
+   "status": 200,
+   "body": {
+    "count": 8,
+    "next": null,
+    "previous": null,
+    "results": [
+     {
+      "id": 8,
+      "amount": "19.99",
+      "currency": "USD",
+      "description": "Phone stand",
+      "date": "2026-10-07",
+      "category": null,
+      "created_at": "2026-10-07T11:35:36.551199Z",
+      "updated_at": "2026-10-07T11:35:36.551199Z"
+     },
+     {
+      "id": 7,
+      "amount": "58.00",
+      "currency": "USD",
+      "description": "Dinner with friends",
+      "date": "2026-10-06",
+      "category": 4,
+      "created_at": "2026-10-07T11:35:36.544047Z",
+      "updated_at": "2026-10-07T11:35:36.544047Z"
+     },
+     {
+      "id": 6,
+      "amount": "2.75",
+      "currency": "USD",
+      "description": "Bus fare",
+      "date": "2026-10-06",
+      "category": 3,
+      "created_at": "2026-10-07T11:35:36.544047Z",
+      "updated_at": "2026-10-07T11:35:36.544047Z"
+     },
+     {
+      "id": 5,
+      "amount": "64.25",
+      "currency": "USD",
+      "description": "Farmers market and groceries",
+      "date": "2026-10-05",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.535421Z",
+      "updated_at": "2026-10-07T11:35:36.535421Z"
+     },
+     {
+      "id": 4,
+      "amount": "31.80",
+      "currency": "USD",
+      "description": "Thai takeout",
+      "date": "2026-10-04",
+      "category": 4,
+      "created_at": "2026-10-07T11:35:36.535421Z",
+      "updated_at": "2026-10-07T11:35:36.535421Z"
+     },
+     {
+      "id": 3,
+      "amount": "42.15",
+      "currency": "USD",
+      "description": "Gas",
+      "date": "2026-10-03",
+      "category": 3,
+      "created_at": "2026-10-07T11:35:36.530333Z",
+      "updated_at": "2026-10-07T11:35:36.530333Z"
+     },
+     {
+      "id": 2,
+      "amount": "86.40",
+      "currency": "USD",
+      "description": "Weekly groceries",
+      "date": "2026-10-02",
+      "category": 1,
+      "created_at": "2026-10-07T11:35:36.524634Z",
+      "updated_at": "2026-10-07T11:35:36.524634Z"
+     },
+     {
+      "id": 1,
+      "amount": "1450.00",
+      "currency": "USD",
+      "description": "October rent",
+      "date": "2026-10-01",
+      "category": 2,
+      "created_at": "2026-10-07T11:35:36.514963Z",
+      "updated_at": "2026-10-07T11:35:36.514963Z"
+     }
+    ]
+   }
+  },
+  "GET /api/v1/budgets/?over_budget=true": {
+   "status": 200,
+   "body": {
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+     {
+      "id": 3,
+      "category": 4,
+      "month": "2026-10",
+      "limit": "80.00",
+      "currency": "USD",
+      "spent": "89.80",
+      "remaining": "-9.80",
+      "over_budget": true,
+      "created_at": "2026-10-07T11:35:36.597296Z",
+      "updated_at": "2026-10-07T11:35:36.656306Z"
+     }
+    ]
+   }
+  },
+  "GET /api/v1/reports/summary/": {
+   "status": 200,
+   "body": {
+    "start": null,
+    "end": null,
+    "currency": "USD",
+    "total": "3732.74",
+    "count": 12,
+    "by_category": [
+     {
+      "category_id": 2,
+      "category_name": "Rent",
+      "total": "2900.00",
+      "count": 2
+     },
+     {
+      "category_id": 1,
+      "category_name": "Groceries",
+      "total": "463.25",
+      "count": 3
+     },
+     {
+      "category_id": 4,
+      "category_name": "Dining out",
+      "total": "186.30",
+      "count": 3
+     },
+     {
+      "category_id": 3,
+      "category_name": "Transport",
+      "total": "163.20",
+      "count": 3
+     },
+     {
+      "category_id": null,
+      "category_name": null,
+      "total": "19.99",
+      "count": 1
+     }
+    ],
+    "by_month": [
+     {
+      "month": "2026-09",
+      "total": "1977.40",
+      "count": 4
+     },
+     {
+      "month": "2026-10",
+      "total": "1755.34",
+      "count": 8
+     }
+    ]
+   }
+  },
+  "GET /api/v1/reports/summary/?start=2026-10-01&end=2026-10-31": {
+   "status": 200,
+   "body": {
+    "start": "2026-10-01",
+    "end": "2026-10-31",
+    "currency": "USD",
+    "total": "1755.34",
+    "count": 8,
+    "by_category": [
+     {
+      "category_id": 2,
+      "category_name": "Rent",
+      "total": "1450.00",
+      "count": 1
+     },
+     {
+      "category_id": 1,
+      "category_name": "Groceries",
+      "total": "150.65",
+      "count": 2
+     },
+     {
+      "category_id": 4,
+      "category_name": "Dining out",
+      "total": "89.80",
+      "count": 2
+     },
+     {
+      "category_id": 3,
+      "category_name": "Transport",
+      "total": "44.90",
+      "count": 2
+     },
+     {
+      "category_id": null,
+      "category_name": null,
+      "total": "19.99",
+      "count": 1
+     }
+    ],
+    "by_month": [
+     {
+      "month": "2026-10",
+      "total": "1755.34",
+      "count": 8
+     }
+    ]
+   }
+  }
+ }
+}

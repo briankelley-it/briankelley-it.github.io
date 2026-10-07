@@ -1,0 +1,78 @@
+
+<div data-modal-backdrop class="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-slate-900/50 p-4 sm:items-center">
+  <article class="card w-full max-w-2xl p-6" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <header class="flex items-start justify-between gap-4">
+      <div class="min-w-0">
+        <p class="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">Done</p>
+        <h2 id="modal-title" class="mt-1 text-xl font-semibold leading-snug">Design the homepage hero</h2>
+      </div>
+      <div class="flex shrink-0 items-center gap-2">
+        <a href="/taskforge/projects/1/tasks/1/edit/" hx-get="/taskforge/projects/1/tasks/1/edit/" hx-target="#modal" hx-swap="innerHTML" class="btn-secondary">Edit</a>
+        <button type="button" data-close-modal aria-label="Close" class="px-1 text-xl leading-none text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">&times;</button>
+      </div>
+    </header>
+
+    <dl class="mt-4 grid grid-cols-2 gap-x-6 gap-y-3 text-sm sm:grid-cols-4">
+      <div>
+        <dt class="text-xs text-slate-500 dark:text-slate-400">Priority</dt>
+        <dd class="font-medium">High</dd>
+      </div>
+      <div>
+        <dt class="text-xs text-slate-500 dark:text-slate-400">Assignee</dt>
+        <dd class="font-medium">Demo User</dd>
+      </div>
+      <div>
+        <dt class="text-xs text-slate-500 dark:text-slate-400">Due</dt>
+        <dd class="font-medium ">
+          Oct 1, 2026
+        </dd>
+      </div>
+      <div>
+        <dt class="text-xs text-slate-500 dark:text-slate-400">Created by</dt>
+        <dd class="font-medium">Priya Natarajan</dd>
+      </div>
+    </dl>
+
+    
+
+    <div class="mt-6 border-t border-slate-100 pt-4 dark:border-slate-700">
+      
+
+<section id="comments">
+  <h3 class="text-sm font-semibold">Comments <span class="font-normal text-slate-500">(1)</span></h3>
+  <ol class="mt-3 space-y-3">
+    
+      <li class="rounded-lg bg-slate-50 px-3 py-2 dark:bg-slate-900/60">
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          <span class="font-medium text-slate-700 dark:text-slate-200">Priya Natarajan</span>
+          · <time datetime="2026-10-07T11:31:55.913373+00:00">just now</time>
+        </p>
+        <p class="mt-1 whitespace-pre-line text-sm">Looks good to me 👍</p>
+      </li>
+    
+  </ol>
+  
+  <form method="post" action="/taskforge/projects/1/tasks/1/comments/"
+        hx-post="/taskforge/projects/1/tasks/1/comments/" hx-target="#comments" hx-swap="outerHTML"
+        class="form-stack mt-4">
+    <input type="hidden" name="csrfmiddlewaretoken" value="WCTl0jknRA7YQNbvsfhPteESnHmPoPcddLC3k4aVzE0TGpegIawKdi2sYQ9XEzet">
+    
+
+
+
+  <div class="mb-4">
+    <label for="id_body">Add a comment</label>
+    <textarea name="body" cols="40" rows="2" placeholder="Write a comment…" required id="id_body">
+</textarea>
+    
+    
+  </div>
+
+
+    <button type="submit" class="btn-primary">Comment</button>
+  </form>
+</section>
+
+    </div>
+  </article>
+</div>

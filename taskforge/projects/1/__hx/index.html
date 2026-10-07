@@ -1,0 +1,344 @@
+
+
+
+<div id="board"
+     hx-get="/taskforge/projects/1/"
+     hx-trigger="boardChanged from:body"
+     hx-swap="outerHTML"
+     hx-disinherit="*"
+     class="grid gap-4 md:grid-cols-3">
+  
+  
+    <section class="flex flex-col rounded-2xl border border-line bg-white/70 p-3 dark:border-line-dark dark:bg-surface-dark/60" aria-labelledby="col-todo">
+      <header class="mb-3 flex items-center justify-between px-1">
+        <h2 id="col-todo" class="flex items-center gap-2 text-sm font-semibold">
+          <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+          To Do
+          <span class="rounded-full bg-canvas px-2 text-xs font-medium text-muted dark:bg-white/5">5</span>
+        </h2>
+        <a href="/taskforge/projects/1/tasks/new/?status=todo"
+           hx-get="/taskforge/projects/1/tasks/new/?status=todo" hx-target="#modal" hx-swap="innerHTML"
+           class="rounded p-1 text-slate-400 hover:bg-white hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+           aria-label="Add a task to To Do">+</a>
+      </header>
+      
+      
+      <ul data-sortable data-status="todo"
+          class="min-h-24 flex-1 space-y-2 rounded-lg empty:border-2 empty:border-dashed empty:border-line empty:before:block empty:before:p-6 empty:before:text-center empty:before:text-xs empty:before:text-slate-400 empty:before:content-['Drop_tasks_here'] dark:empty:border-line-dark"><li id="task-7"
+    data-move-url="/taskforge/projects/1/tasks/7/move/"
+    hx-get="/taskforge/projects/1/tasks/7/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Write the About page"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 ">
+  <p class="text-sm font-medium leading-snug">Write the About page</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300
+      ">Medium</span>
+    
+      
+        <span class="text-slate-500 dark:text-slate-400">Due Oct 13</span>
+      
+    
+    
+      <span class="text-slate-500 dark:text-slate-400" title="1 comment">
+        <span aria-hidden="true">💬</span> 1
+      </span>
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-pink-500 to-rose-500 h-6 w-6 text-[9px]" title="Sam Rivera">SR</span>
+</span>
+    
+  </div>
+</li>
+<li id="task-8"
+    data-move-url="/taskforge/projects/1/tasks/8/move/"
+    hx-get="/taskforge/projects/1/tasks/8/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Add analytics"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 ">
+  <p class="text-sm font-medium leading-snug">Add analytics</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">Low</span>
+    
+      
+        <span class="text-slate-500 dark:text-slate-400">Due Oct 17</span>
+      
+    
+    
+    
+  </div>
+</li>
+<li id="task-9"
+    data-move-url="/taskforge/projects/1/tasks/9/move/"
+    hx-get="/taskforge/projects/1/tasks/9/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Accessibility audit"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 border-l-4 border-l-amber-400">
+  <p class="text-sm font-medium leading-snug">Accessibility audit</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300
+      ">High</span>
+    
+      
+        <span class="rounded bg-amber-100 px-1.5 py-0.5 font-semibold text-amber-800 dark:bg-amber-950 dark:text-amber-300">Due soon · Oct 9</span>
+      
+    
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-amber-400 to-orange-500 h-6 w-6 text-[9px]" title="Demo User">DU</span>
+</span>
+    
+  </div>
+</li>
+<li id="task-10"
+    data-move-url="/taskforge/projects/1/tasks/10/move/"
+    hx-get="/taskforge/projects/1/tasks/10/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Set up 301 redirects from the old site"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 border-l-4 border-l-red-500">
+  <p class="text-sm font-medium leading-snug">Set up 301 redirects from the old site</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300
+      ">Medium</span>
+    
+      
+        <span class="rounded bg-red-100 px-1.5 py-0.5 font-semibold text-red-700 dark:bg-red-950 dark:text-red-300">Overdue · Oct 5</span>
+      
+    
+    
+      <span class="text-slate-500 dark:text-slate-400" title="1 comment">
+        <span aria-hidden="true">💬</span> 1
+      </span>
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-emerald-400 to-green-600 h-6 w-6 text-[9px]" title="Priya Natarajan">PN</span>
+</span>
+    
+  </div>
+</li>
+<li id="task-11"
+    data-move-url="/taskforge/projects/1/tasks/11/move/"
+    hx-get="/taskforge/projects/1/tasks/11/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Launch announcement email"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 ">
+  <p class="text-sm font-medium leading-snug">Launch announcement email</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">Low</span>
+    
+      
+        <span class="text-slate-500 dark:text-slate-400">Due Oct 21</span>
+      
+    
+    
+      <span class="text-slate-500 dark:text-slate-400" title="1 comment">
+        <span aria-hidden="true">💬</span> 1
+      </span>
+    
+    
+  </div>
+</li>
+</ul>
+    </section>
+  
+    <section class="flex flex-col rounded-2xl border border-line bg-white/70 p-3 dark:border-line-dark dark:bg-surface-dark/60" aria-labelledby="col-in_progress">
+      <header class="mb-3 flex items-center justify-between px-1">
+        <h2 id="col-in_progress" class="flex items-center gap-2 text-sm font-semibold">
+          <span class="h-2 w-2 rounded-full bg-indigo-500"></span>
+          In Progress
+          <span class="rounded-full bg-canvas px-2 text-xs font-medium text-muted dark:bg-white/5">3</span>
+        </h2>
+        <a href="/taskforge/projects/1/tasks/new/?status=in_progress"
+           hx-get="/taskforge/projects/1/tasks/new/?status=in_progress" hx-target="#modal" hx-swap="innerHTML"
+           class="rounded p-1 text-slate-400 hover:bg-white hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+           aria-label="Add a task to In Progress">+</a>
+      </header>
+      
+      
+      <ul data-sortable data-status="in_progress"
+          class="min-h-24 flex-1 space-y-2 rounded-lg empty:border-2 empty:border-dashed empty:border-line empty:before:block empty:before:p-6 empty:before:text-center empty:before:text-xs empty:before:text-slate-400 empty:before:content-['Drop_tasks_here'] dark:empty:border-line-dark"><li id="task-6"
+    data-move-url="/taskforge/projects/1/tasks/6/move/"
+    hx-get="/taskforge/projects/1/tasks/6/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Compress hero images"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 ">
+  <p class="text-sm font-medium leading-snug">Compress hero images</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300
+      ">Medium</span>
+    
+      
+        <span class="text-slate-500 dark:text-slate-400">Due Oct 11</span>
+      
+    
+    
+      <span class="text-slate-500 dark:text-slate-400" title="1 comment">
+        <span aria-hidden="true">💬</span> 1
+      </span>
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-emerald-400 to-green-600 h-6 w-6 text-[9px]" title="Priya Natarajan">PN</span>
+</span>
+    
+  </div>
+</li>
+<li id="task-5"
+    data-move-url="/taskforge/projects/1/tasks/5/move/"
+    hx-get="/taskforge/projects/1/tasks/5/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Set up hosting and SSL"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 border-l-4 border-l-red-500">
+  <p class="text-sm font-medium leading-snug">Set up hosting and SSL</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300
+      ">High</span>
+    
+      
+        <span class="rounded bg-red-100 px-1.5 py-0.5 font-semibold text-red-700 dark:bg-red-950 dark:text-red-300">Overdue · Oct 6</span>
+      
+    
+    
+      <span class="text-slate-500 dark:text-slate-400" title="1 comment">
+        <span aria-hidden="true">💬</span> 1
+      </span>
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-pink-500 to-rose-500 h-6 w-6 text-[9px]" title="Sam Rivera">SR</span>
+</span>
+    
+  </div>
+</li>
+<li id="task-4"
+    data-move-url="/taskforge/projects/1/tasks/4/move/"
+    hx-get="/taskforge/projects/1/tasks/4/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Build the contact form"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 border-l-4 border-l-amber-400">
+  <p class="text-sm font-medium leading-snug">Build the contact form</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300
+      ">High</span>
+    
+      
+        <span class="rounded bg-amber-100 px-1.5 py-0.5 font-semibold text-amber-800 dark:bg-amber-950 dark:text-amber-300">Due soon · Oct 8</span>
+      
+    
+    
+      <span class="text-slate-500 dark:text-slate-400" title="1 comment">
+        <span aria-hidden="true">💬</span> 1
+      </span>
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-amber-400 to-orange-500 h-6 w-6 text-[9px]" title="Demo User">DU</span>
+</span>
+    
+  </div>
+</li>
+</ul>
+    </section>
+  
+    <section class="flex flex-col rounded-2xl border border-line bg-white/70 p-3 dark:border-line-dark dark:bg-surface-dark/60" aria-labelledby="col-done">
+      <header class="mb-3 flex items-center justify-between px-1">
+        <h2 id="col-done" class="flex items-center gap-2 text-sm font-semibold">
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          Done
+          <span class="rounded-full bg-canvas px-2 text-xs font-medium text-muted dark:bg-white/5">3</span>
+        </h2>
+        <a href="/taskforge/projects/1/tasks/new/?status=done"
+           hx-get="/taskforge/projects/1/tasks/new/?status=done" hx-target="#modal" hx-swap="innerHTML"
+           class="rounded p-1 text-slate-400 hover:bg-white hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-200"
+           aria-label="Add a task to Done">+</a>
+      </header>
+      
+      
+      <ul data-sortable data-status="done"
+          class="min-h-24 flex-1 space-y-2 rounded-lg empty:border-2 empty:border-dashed empty:border-line empty:before:block empty:before:p-6 empty:before:text-center empty:before:text-xs empty:before:text-slate-400 empty:before:content-['Drop_tasks_here'] dark:empty:border-line-dark"><li id="task-3"
+    data-move-url="/taskforge/projects/1/tasks/3/move/"
+    hx-get="/taskforge/projects/1/tasks/3/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Choose a font pairing"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 ">
+  <p class="text-sm font-medium leading-snug">Choose a font pairing</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">Low</span>
+    
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-emerald-400 to-green-600 h-6 w-6 text-[9px]" title="Priya Natarajan">PN</span>
+</span>
+    
+  </div>
+</li>
+<li id="task-2"
+    data-move-url="/taskforge/projects/1/tasks/2/move/"
+    hx-get="/taskforge/projects/1/tasks/2/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Write pricing page copy"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 ">
+  <p class="text-sm font-medium leading-snug">Write pricing page copy</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300
+      ">Medium</span>
+    
+      
+        <span class="text-slate-500 dark:text-slate-400">Due Oct 4</span>
+      
+    
+    
+      <span class="text-slate-500 dark:text-slate-400" title="1 comment">
+        <span aria-hidden="true">💬</span> 1
+      </span>
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-pink-500 to-rose-500 h-6 w-6 text-[9px]" title="Sam Rivera">SR</span>
+</span>
+    
+  </div>
+</li>
+<li id="task-1"
+    data-move-url="/taskforge/projects/1/tasks/1/move/"
+    hx-get="/taskforge/projects/1/tasks/1/" hx-target="#modal" hx-swap="innerHTML"
+    hx-trigger="click, keyup[key=='Enter']"
+    role="button" tabindex="0" aria-label="Open Design the homepage hero"
+    class="card cursor-grab select-none p-3 transition hover:border-indigo-300 active:cursor-grabbing dark:hover:border-indigo-700 ">
+  <p class="text-sm font-medium leading-snug">Design the homepage hero</p>
+  <div class="mt-2 flex flex-wrap items-center gap-2 text-xs">
+    <span class="rounded px-1.5 py-0.5 font-medium
+      bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300
+      ">High</span>
+    
+      
+        <span class="text-slate-500 dark:text-slate-400">Due Oct 1</span>
+      
+    
+    
+      <span class="text-slate-500 dark:text-slate-400" title="1 comment">
+        <span aria-hidden="true">💬</span> 1
+      </span>
+    
+    
+      <span class="ml-auto"><span class="relative inline-grid shrink-0 place-items-center rounded-full font-semibold text-white ring-2 ring-white dark:ring-surface-dark bg-gradient-to-br from-amber-400 to-orange-500 h-6 w-6 text-[9px]" title="Demo User">DU</span>
+</span>
+    
+  </div>
+</li>
+</ul>
+    </section>
+  
+</div>
+
+
+
+<a href="/taskforge/projects/1/tasks/export.csv"
+   id="export-csv" class="btn-secondary" download hx-swap-oob="true">Export CSV</a>
+

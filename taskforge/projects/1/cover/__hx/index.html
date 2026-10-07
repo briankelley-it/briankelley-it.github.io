@@ -1,0 +1,54 @@
+
+
+<div data-modal-backdrop class="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-ink/40 p-4 backdrop-blur-[2px] sm:items-center">
+  <div class="card w-full max-w-lg p-6" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="mb-4 flex items-start justify-between gap-4">
+      <div>
+        <h2 id="modal-title" class="text-lg font-semibold">Cover image</h2>
+        <p class="text-sm text-muted">Website relaunch</p>
+      </div>
+      <button type="button" data-close-modal aria-label="Close" class="icon-btn -mr-2 -mt-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-5 w-5">
+<path d="M6 6l12 12M18 6 6 18"/>
+
+</svg>
+</button>
+    </div>
+    <form method="post" action="/taskforge/projects/1/cover/" enctype="multipart/form-data"
+          hx-post="/taskforge/projects/1/cover/" hx-encoding="multipart/form-data" hx-target="#modal" hx-swap="innerHTML">
+      <input type="hidden" name="csrfmiddlewaretoken" value="HF2pQlY51IQLsUYiUnHgW3mk6Y9hpsD0YOL7a6ODJMJGiw13aiWbG7KUH7WpFcFg">
+      <input type="hidden" name="next" value="">
+      
+<div data-dropzone>
+  <label for="id_cover"
+         class="group relative block cursor-pointer overflow-hidden rounded-2xl border-2 border-dashed border-line bg-canvas transition hover:border-indigo-400 data-[dragging]:border-indigo-500 data-[dragging]:ring-4 data-[dragging]:ring-indigo-500/15 dark:border-line-dark dark:bg-canvas-dark">
+    <img data-dropzone-preview src="https://placehold.co/600x400" alt="Cover preview" class="aspect-[3/2] w-full object-cover">
+    <span class="absolute inset-0 grid place-items-center bg-ink/0 transition group-hover:bg-ink/25 group-data-[dragging]:bg-indigo-500/25">
+      
+      <span class="flex items-center gap-2 rounded-xl bg-white/95 px-4 py-2 text-sm font-medium text-ink shadow-soft transition group-hover:opacity-100 group-data-[has-file]:opacity-0 dark:bg-surface-dark/95 dark:text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-4 w-4 rotate-180">
+<path d="M4 16.5v2A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5v-2M12 3v12.5m0 0-4.5-4.5m4.5 4.5 4.5-4.5"/>
+
+</svg>
+
+        Choose an image or drop it here
+      </span>
+    </span>
+  </label>
+  <input type="file" name="cover" accept="image/*" data-cover-input class="sr-only" required aria-describedby="id_cover_helptext" id="id_cover">
+  <p class="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-muted">
+    <span>JPG, PNG, WebP or GIF, up to 5 MB.</span>
+    <span data-dropzone-name class="truncate font-medium text-ink dark:text-white"></span>
+  </p>
+  
+</div>
+
+      <div class="mt-5 flex flex-wrap items-center gap-3">
+        <button type="submit" class="btn-primary">Save cover</button>
+        
+          <button type="button" data-close-modal class="btn-secondary">Cancel</button>
+        
+        
+      </div>
+    </form>
+  </div>
+</div>

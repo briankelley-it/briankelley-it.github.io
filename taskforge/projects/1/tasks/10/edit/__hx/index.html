@@ -1,0 +1,99 @@
+
+
+<div data-modal-backdrop class="fixed inset-0 z-50 flex items-end justify-center overflow-y-auto bg-slate-900/50 p-4 sm:items-center">
+  <div class="card form-stack w-full max-w-lg p-6" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="mb-4 flex items-start justify-between gap-4">
+      <h2 id="modal-title" class="text-lg font-semibold">Edit task</h2>
+      <button type="button" data-close-modal aria-label="Close" class="text-xl leading-none text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">&times;</button>
+    </div>
+    <form method="post" action="/taskforge/projects/1/tasks/10/edit/" hx-post="/taskforge/projects/1/tasks/10/edit/" hx-target="#modal" hx-swap="innerHTML">
+      <input type="hidden" name="csrfmiddlewaretoken" value="82vprXfEydp8w0YB4lYAaUCIkUZ9AmKZpbe7LI5cghi3mC1mkgdvUY0iV3MhQ6Mf">
+      
+
+
+
+  <div class="mb-4">
+    <label for="id_title">Title</label>
+    <input type="text" name="title" value="Set up 301 redirects from the old site" autofocus placeholder="What needs doing?" maxlength="200" required id="id_title">
+    
+    
+  </div>
+
+  <div class="mb-4">
+    <label for="id_description">Description</label>
+    <textarea name="description" cols="40" rows="3" id="id_description">
+</textarea>
+    
+    
+  </div>
+
+  <div class="mb-4">
+    <label for="id_status">Status</label>
+    <select name="status" id="id_status">
+  <option value="todo" selected>To Do</option>
+
+  <option value="in_progress">In Progress</option>
+
+  <option value="done">Done</option>
+
+</select>
+    
+    
+  </div>
+
+  <div class="mb-4">
+    <label for="id_priority">Priority</label>
+    <select name="priority" id="id_priority">
+  <option value="low">Low</option>
+
+  <option value="medium" selected>Medium</option>
+
+  <option value="high">High</option>
+
+</select>
+    
+    
+  </div>
+
+  <div class="mb-4">
+    <label for="id_due_date">Due date</label>
+    <input type="date" name="due_date" value="2026-10-05" id="id_due_date">
+    
+    
+  </div>
+
+  <div class="mb-4">
+    <label for="id_assignee">Assignee</label>
+    <select name="assignee" id="id_assignee">
+  <option value="">---------</option>
+
+  <option value="1">Demo User</option>
+
+  <option value="3" selected>Priya Natarajan</option>
+
+  <option value="2">Sam Rivera</option>
+
+</select>
+    
+    
+  </div>
+
+
+      <div class="flex flex-wrap gap-3">
+        <button type="submit" class="btn-primary">Save changes</button>
+        
+          <button type="button" data-close-modal class="btn-secondary">Cancel</button>
+        
+      </div>
+    </form>
+    
+      <form method="post" action="/taskforge/projects/1/tasks/10/delete/"
+            hx-post="/taskforge/projects/1/tasks/10/delete/"
+            hx-confirm="Delete “Set up 301 redirects from the old site”? This can't be undone."
+            class="mt-4 border-t border-slate-100 pt-4 dark:border-slate-700">
+        <input type="hidden" name="csrfmiddlewaretoken" value="82vprXfEydp8w0YB4lYAaUCIkUZ9AmKZpbe7LI5cghi3mC1mkgdvUY0iV3MhQ6Mf">
+        <button type="submit" class="text-sm text-red-600 hover:underline dark:text-red-400">Delete task</button>
+      </form>
+    
+  </div>
+</div>

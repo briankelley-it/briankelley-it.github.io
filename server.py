@@ -12,6 +12,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent
 PUBLIC_FILES = {"index.html", "styles.css", "script.js", "projects.json"}
+DEMO_DIRS = {"thistledown", "taskforge", "ledgerapi"}
 
 
 class PortfolioHandler(SimpleHTTPRequestHandler):
@@ -34,12 +35,13 @@ class PortfolioHandler(SimpleHTTPRequestHandler):
             return None
         if path == "/":
             self.path = "/index.html"
-        elif path.startswith("/thistledown/"):
-            # Static export of the Thistledown Homes demo: folders serve their index.html.
+        elif path.split("/")[1] in DEMO_DIRS:
+            # Static project demos: folders serve their index.html.
             candidate = (ROOT / path.lstrip("/")).resolve()
             if candidate.is_dir():
                 candidate = candidate / "index.html"
-            if ".." in path or "%" in path or not candidate.is_relative_to(ROOT / "thistledown") or not candidate.is_file():
+            demo_root = ROOT / path.split("/")[1]
+            if ".." in path or "%" in path or not candidate.is_relative_to(demo_root) or not candidate.is_file():
                 self.send_error(404)
                 return None
             self.path = "/" + candidate.relative_to(ROOT).as_posix()

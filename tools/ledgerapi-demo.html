@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>LedgerAPI Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css">
+  <style>
+    body { margin: 0; background: #fff; }
+    .demo-note { background: #fef3c7; color: #422006; font: 14px/1.5 system-ui, sans-serif; padding: 10px 16px; text-align: center; }
+    .demo-note a { color: inherit; }
+    .demo-note code { background: rgba(0, 0, 0, .06); padding: 1px 5px; border-radius: 4px; }
+  </style>
+  <!-- Must run before Swagger UI so its requests can be answered from the recordings. -->
+  <script src="ledgerapi-demo.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js" defer></script>
+</head>
+<body>
+  <div class="demo-note" role="note">
+    <strong>Static demo.</strong> This is LedgerAPI's real OpenAPI schema. "Try it out" returns responses recorded from the real API,
+    and you are already authorized as the demo user (<code id="demo-email"></code> / <code id="demo-password"></code>). Nothing is saved.
+    <a href="../">Back to portfolio</a>
+  </div>
+  <div id="swagger-ui"></div>
+</body>
+</html>

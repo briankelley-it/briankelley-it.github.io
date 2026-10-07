@@ -1,0 +1,2789 @@
+{
+ "openapi": "3.0.3",
+ "info": {
+  "title": "LedgerAPI",
+  "version": "1.0.0",
+  "description": "A small expense tracker REST API. Register, get a JWT, then manage your own categories, expenses and monthly budgets and see spending summaries. Click Authorize and paste an access token to try it out."
+ },
+ "paths": {
+  "/api/v1/auth/me/": {
+   "get": {
+    "operationId": "auth_me_retrieve",
+    "summary": "Get the current user",
+    "tags": [
+     "auth"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/User"
+        }
+       }
+      },
+      "description": ""
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   }
+  },
+  "/api/v1/auth/register/": {
+   "post": {
+    "operationId": "auth_register_create",
+    "summary": "Register a new user",
+    "tags": [
+     "auth"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RegisterRequest"
+       },
+       "examples": {
+        "Register": {
+         "value": {
+          "email": "jane@example.com",
+          "password": "correct-horse-battery"
+         }
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "security": [
+     {}
+    ],
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Register"
+        },
+        "examples": {
+         "CreatedUser": {
+          "value": {
+           "id": 1,
+           "email": "jane@example.com",
+           "date_joined": "2026-10-05T12:00:00Z"
+          },
+          "summary": "Created user"
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     }
+    }
+   }
+  },
+  "/api/v1/auth/token/": {
+   "post": {
+    "operationId": "auth_token_create",
+    "description": "Takes a set of user credentials and returns an access and refresh JSON web\ntoken pair to prove the authentication of those credentials.",
+    "summary": "Log in: get an access and refresh token",
+    "tags": [
+     "auth"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/EmailTokenObtainPairRequest"
+       },
+       "examples": {
+        "Login": {
+         "value": {
+          "email": "jane@example.com",
+          "password": "correct-horse-battery"
+         }
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "No response body"
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   }
+  },
+  "/api/v1/auth/token/refresh/": {
+   "post": {
+    "operationId": "auth_token_refresh_create",
+    "description": "Takes a refresh type JSON web token and returns an access type JSON web\ntoken if the refresh token is valid.",
+    "summary": "Get a new access token using a refresh token",
+    "tags": [
+     "auth"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TokenRefreshRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   }
+  },
+  "/api/v1/budgets/": {
+   "get": {
+    "operationId": "budgets_list",
+    "description": "Each budget includes how much has been spent in its category, month and currency. Filter with month=YYYY-MM, category and over_budget. Sort with ordering=month, limit or spent (prefix - for descending).",
+    "summary": "List your budgets",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "category",
+      "schema": {
+       "type": "number"
+      },
+      "description": "Category id"
+     },
+     {
+      "in": "query",
+      "name": "month",
+      "schema": {
+       "type": "string"
+      },
+      "description": "Month as YYYY-MM"
+     },
+     {
+      "name": "ordering",
+      "required": false,
+      "in": "query",
+      "description": "Which field to use when ordering the results.",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "over_budget",
+      "schema": {
+       "type": "boolean"
+      },
+      "description": "Only budgets that are (or are not) over the limit"
+     },
+     {
+      "name": "page",
+      "required": false,
+      "in": "query",
+      "description": "A page number within the paginated result set.",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "page_size",
+      "required": false,
+      "in": "query",
+      "description": "Number of results to return per page.",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "search",
+      "required": false,
+      "in": "query",
+      "description": "A search term.",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "tags": [
+     "budgets"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   },
+   "post": {
+    "operationId": "budgets_create",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Create a monthly budget for a category",
+    "tags": [
+     "budgets"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/BudgetRequest"
+       },
+       "examples": {
+        "CreateBudget": {
+         "value": {
+          "category": 1,
+          "month": "2026-10",
+          "limit": "400.00",
+          "currency": "USD"
+         },
+         "summary": "Create budget"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Budget"
+        },
+        "examples": {
+         "Budget": {
+          "value": {
+           "id": 3,
+           "category": 1,
+           "month": "2026-10",
+           "limit": "400.00",
+           "currency": "USD",
+           "spent": "312.50",
+           "remaining": "87.50",
+           "over_budget": false,
+           "created_at": "2026-10-01T09:00:00Z",
+           "updated_at": "2026-10-01T09:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   }
+  },
+  "/api/v1/budgets/{id}/": {
+   "get": {
+    "operationId": "budgets_retrieve",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Get a budget",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this budget.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "budgets"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Budget"
+        },
+        "examples": {
+         "Budget": {
+          "value": {
+           "id": 3,
+           "category": 1,
+           "month": "2026-10",
+           "limit": "400.00",
+           "currency": "USD",
+           "spent": "312.50",
+           "remaining": "87.50",
+           "over_budget": false,
+           "created_at": "2026-10-01T09:00:00Z",
+           "updated_at": "2026-10-01T09:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "put": {
+    "operationId": "budgets_update",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Replace a budget",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this budget.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "budgets"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/BudgetRequest"
+       },
+       "examples": {
+        "CreateBudget": {
+         "value": {
+          "category": 1,
+          "month": "2026-10",
+          "limit": "400.00",
+          "currency": "USD"
+         },
+         "summary": "Create budget"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Budget"
+        },
+        "examples": {
+         "Budget": {
+          "value": {
+           "id": 3,
+           "category": 1,
+           "month": "2026-10",
+           "limit": "400.00",
+           "currency": "USD",
+           "spent": "312.50",
+           "remaining": "87.50",
+           "over_budget": false,
+           "created_at": "2026-10-01T09:00:00Z",
+           "updated_at": "2026-10-01T09:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "patch": {
+    "operationId": "budgets_partial_update",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Update some fields of a budget",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this budget.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "budgets"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PatchedBudgetRequest"
+       },
+       "examples": {
+        "CreateBudget": {
+         "value": {
+          "category": 1,
+          "month": "2026-10",
+          "limit": "400.00",
+          "currency": "USD"
+         },
+         "summary": "Create budget"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Budget"
+        },
+        "examples": {
+         "Budget": {
+          "value": {
+           "id": 3,
+           "category": 1,
+           "month": "2026-10",
+           "limit": "400.00",
+           "currency": "USD",
+           "spent": "312.50",
+           "remaining": "87.50",
+           "over_budget": false,
+           "created_at": "2026-10-01T09:00:00Z",
+           "updated_at": "2026-10-01T09:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "delete": {
+    "operationId": "budgets_destroy",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Delete a budget",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this budget.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "budgets"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No response body"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   }
+  },
+  "/api/v1/categories/": {
+   "get": {
+    "operationId": "categories_list",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "List your categories",
+    "parameters": [
+     {
+      "name": "ordering",
+      "required": false,
+      "in": "query",
+      "description": "Which field to use when ordering the results.",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "page",
+      "required": false,
+      "in": "query",
+      "description": "A page number within the paginated result set.",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "page_size",
+      "required": false,
+      "in": "query",
+      "description": "Number of results to return per page.",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "search",
+      "required": false,
+      "in": "query",
+      "description": "A search term.",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "tags": [
+     "categories"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   },
+   "post": {
+    "operationId": "categories_create",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Create a category",
+    "tags": [
+     "categories"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CategoryRequest"
+       },
+       "examples": {
+        "CreateCategory": {
+         "value": {
+          "name": "Groceries",
+          "color": "#4CAF50"
+         },
+         "summary": "Create category"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Category"
+        },
+        "examples": {
+         "Category": {
+          "value": {
+           "id": 1,
+           "name": "Groceries",
+           "color": "#4CAF50",
+           "created_at": "2026-10-05T12:00:00Z",
+           "updated_at": "2026-10-05T12:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   }
+  },
+  "/api/v1/categories/{id}/": {
+   "get": {
+    "operationId": "categories_retrieve",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Get a category",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this category.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "categories"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Category"
+        },
+        "examples": {
+         "Category": {
+          "value": {
+           "id": 1,
+           "name": "Groceries",
+           "color": "#4CAF50",
+           "created_at": "2026-10-05T12:00:00Z",
+           "updated_at": "2026-10-05T12:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "put": {
+    "operationId": "categories_update",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Replace a category",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this category.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "categories"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CategoryRequest"
+       },
+       "examples": {
+        "CreateCategory": {
+         "value": {
+          "name": "Groceries",
+          "color": "#4CAF50"
+         },
+         "summary": "Create category"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Category"
+        },
+        "examples": {
+         "Category": {
+          "value": {
+           "id": 1,
+           "name": "Groceries",
+           "color": "#4CAF50",
+           "created_at": "2026-10-05T12:00:00Z",
+           "updated_at": "2026-10-05T12:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "patch": {
+    "operationId": "categories_partial_update",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Update some fields of a category",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this category.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "categories"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PatchedCategoryRequest"
+       },
+       "examples": {
+        "CreateCategory": {
+         "value": {
+          "name": "Groceries",
+          "color": "#4CAF50"
+         },
+         "summary": "Create category"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Category"
+        },
+        "examples": {
+         "Category": {
+          "value": {
+           "id": 1,
+           "name": "Groceries",
+           "color": "#4CAF50",
+           "created_at": "2026-10-05T12:00:00Z",
+           "updated_at": "2026-10-05T12:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "delete": {
+    "operationId": "categories_destroy",
+    "description": "Expenses in this category are kept and become uncategorized.",
+    "summary": "Delete a category",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this category.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "categories"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No response body"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   }
+  },
+  "/api/v1/expenses/": {
+   "get": {
+    "operationId": "expenses_list",
+    "description": "Filter with date_after, date_before, category, uncategorized, min_amount, max_amount and currency. Search the description with search=. Sort with ordering=date, -date, amount or -amount. Paginate with page= and page_size= (max 100).",
+    "summary": "List your expenses",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "category",
+      "schema": {
+       "type": "number"
+      },
+      "description": "Category id"
+     },
+     {
+      "in": "query",
+      "name": "currency",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "date_after",
+      "schema": {
+       "type": "string",
+       "format": "date"
+      },
+      "description": "Date range (inclusive)"
+     },
+     {
+      "in": "query",
+      "name": "date_before",
+      "schema": {
+       "type": "string",
+       "format": "date"
+      },
+      "description": "Date range (inclusive)"
+     },
+     {
+      "in": "query",
+      "name": "max_amount",
+      "schema": {
+       "type": "number"
+      }
+     },
+     {
+      "in": "query",
+      "name": "min_amount",
+      "schema": {
+       "type": "number"
+      }
+     },
+     {
+      "name": "ordering",
+      "required": false,
+      "in": "query",
+      "description": "Which field to use when ordering the results.",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "page",
+      "required": false,
+      "in": "query",
+      "description": "A page number within the paginated result set.",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "page_size",
+      "required": false,
+      "in": "query",
+      "description": "Number of results to return per page.",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "search",
+      "required": false,
+      "in": "query",
+      "description": "A search term.",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "in": "query",
+      "name": "uncategorized",
+      "schema": {
+       "type": "boolean"
+      },
+      "description": "Only expenses without a category"
+     }
+    ],
+    "tags": [
+     "expenses"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   },
+   "post": {
+    "operationId": "expenses_create",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Create an expense",
+    "tags": [
+     "expenses"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ExpenseRequest"
+       },
+       "examples": {
+        "CreateExpense": {
+         "value": {
+          "amount": "42.50",
+          "currency": "USD",
+          "description": "Weekly groceries",
+          "date": "2026-10-04",
+          "category": 1
+         },
+         "summary": "Create expense"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "201": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Expense"
+        },
+        "examples": {
+         "Expense": {
+          "value": {
+           "id": 7,
+           "amount": "42.50",
+           "currency": "USD",
+           "description": "Weekly groceries",
+           "date": "2026-10-04",
+           "category": 1,
+           "created_at": "2026-10-05T12:00:00Z",
+           "updated_at": "2026-10-05T12:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   }
+  },
+  "/api/v1/expenses/{id}/": {
+   "get": {
+    "operationId": "expenses_retrieve",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Get an expense",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this expense.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "expenses"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Expense"
+        },
+        "examples": {
+         "Expense": {
+          "value": {
+           "id": 7,
+           "amount": "42.50",
+           "currency": "USD",
+           "description": "Weekly groceries",
+           "date": "2026-10-04",
+           "category": 1,
+           "created_at": "2026-10-05T12:00:00Z",
+           "updated_at": "2026-10-05T12:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "put": {
+    "operationId": "expenses_update",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Replace an expense",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this expense.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "expenses"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ExpenseRequest"
+       },
+       "examples": {
+        "CreateExpense": {
+         "value": {
+          "amount": "42.50",
+          "currency": "USD",
+          "description": "Weekly groceries",
+          "date": "2026-10-04",
+          "category": 1
+         },
+         "summary": "Create expense"
+        }
+       }
+      }
+     },
+     "required": true
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Expense"
+        },
+        "examples": {
+         "Expense": {
+          "value": {
+           "id": 7,
+           "amount": "42.50",
+           "currency": "USD",
+           "description": "Weekly groceries",
+           "date": "2026-10-04",
+           "category": 1,
+           "created_at": "2026-10-05T12:00:00Z",
+           "updated_at": "2026-10-05T12:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "patch": {
+    "operationId": "expenses_partial_update",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Update some fields of an expense",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this expense.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "expenses"
+    ],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PatchedExpenseRequest"
+       },
+       "examples": {
+        "CreateExpense": {
+         "value": {
+          "amount": "42.50",
+          "currency": "USD",
+          "description": "Weekly groceries",
+          "date": "2026-10-04",
+          "category": 1
+         },
+         "summary": "Create expense"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Expense"
+        },
+        "examples": {
+         "Expense": {
+          "value": {
+           "id": 7,
+           "amount": "42.50",
+           "currency": "USD",
+           "description": "Weekly groceries",
+           "date": "2026-10-04",
+           "category": 1,
+           "created_at": "2026-10-05T12:00:00Z",
+           "updated_at": "2026-10-05T12:00:00Z"
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   },
+   "delete": {
+    "operationId": "expenses_destroy",
+    "description": "Limit a view to records owned by the logged-in user.\n\nEvery model using this has an `owner` foreign key. Because the queryset is\nfiltered before DRF looks up a single object, asking for another user's\nrecord gives a 404, exactly as if it did not exist. A 403 would leak\nthe fact that the id is in use.",
+    "summary": "Delete an expense",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "schema": {
+       "type": "integer"
+      },
+      "description": "A unique integer value identifying this expense.",
+      "required": true
+     }
+    ],
+    "tags": [
+     "expenses"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "No response body"
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotFound": {
+          "value": {
+           "error": {
+            "code": "not_found",
+            "message": "No Expense matches the given query.",
+            "details": null
+           }
+          },
+          "summary": "not_found"
+         }
+        }
+       }
+      },
+      "description": "Not found (or it belongs to another user)"
+     }
+    }
+   }
+  },
+  "/api/v1/health/": {
+   "get": {
+    "operationId": "health_retrieve",
+    "description": "Liveness check for load balancers and Docker. Needs no token.",
+    "summary": "Health check",
+    "tags": [
+     "health"
+    ],
+    "security": [
+     {}
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Health"
+        },
+        "examples": {
+         "Ok": {
+          "value": {
+           "status": "ok",
+           "database": "ok"
+          },
+          "summary": "ok"
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "503": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      },
+      "description": "Database unreachable"
+     }
+    }
+   }
+  },
+  "/api/v1/reports/summary/": {
+   "get": {
+    "operationId": "reports_summary_retrieve",
+    "description": "Total spent, totals by category and totals by month for the current user. Dates are inclusive and both are optional. Only one currency is summed at a time, because adding different currencies together would give a meaningless number.",
+    "summary": "Spending summary",
+    "parameters": [
+     {
+      "in": "query",
+      "name": "currency",
+      "schema": {
+       "type": "string",
+       "minLength": 1,
+       "default": "USD",
+       "pattern": "^[A-Za-z]{3}$"
+      },
+      "description": "Only expenses in this currency are added up. Defaults to USD."
+     },
+     {
+      "in": "query",
+      "name": "end",
+      "schema": {
+       "type": "string",
+       "format": "date"
+      },
+      "description": "Last day to include (YYYY-MM-DD)."
+     },
+     {
+      "in": "query",
+      "name": "start",
+      "schema": {
+       "type": "string",
+       "format": "date"
+      },
+      "description": "First day to include (YYYY-MM-DD)."
+     }
+    ],
+    "tags": [
+     "reports"
+    ],
+    "security": [
+     {
+      "jwtAuth": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Summary"
+        },
+        "examples": {
+         "Summary": {
+          "value": {
+           "start": "2026-01-01",
+           "end": "2026-02-28",
+           "currency": "USD",
+           "total": "1342.50",
+           "count": 14,
+           "by_category": [
+            {
+             "category_id": 2,
+             "category_name": "Rent",
+             "total": "1000.00",
+             "count": 2
+            },
+            {
+             "category_id": 1,
+             "category_name": "Groceries",
+             "total": "312.50",
+             "count": 10
+            },
+            {
+             "category_id": null,
+             "category_name": null,
+             "total": "30.00",
+             "count": 2
+            }
+           ],
+           "by_month": [
+            {
+             "month": "2026-01",
+             "total": "690.00",
+             "count": 7
+            },
+            {
+             "month": "2026-02",
+             "total": "652.50",
+             "count": 7
+            }
+           ]
+          }
+         }
+        }
+       }
+      },
+      "description": ""
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "ValidationError": {
+          "value": {
+           "error": {
+            "code": "validation_error",
+            "message": "Invalid input.",
+            "details": {
+             "field_name": [
+              "This field is required."
+             ]
+            }
+           }
+          },
+          "summary": "validation_error"
+         }
+        }
+       }
+      },
+      "description": "Validation error"
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        },
+        "examples": {
+         "NotAuthenticated": {
+          "value": {
+           "error": {
+            "code": "not_authenticated",
+            "message": "Authentication credentials were not provided.",
+            "details": null
+           }
+          },
+          "summary": "not_authenticated"
+         }
+        }
+       }
+      },
+      "description": "Missing or invalid token"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "Budget": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer",
+      "readOnly": true
+     },
+     "category": {
+      "type": "integer"
+     },
+     "month": {
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+      "example": "2026-10",
+      "description": "YYYY-MM"
+     },
+     "limit": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,10}(?:\\.\\d{0,2})?$"
+     },
+     "currency": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{3}$"
+     },
+     "spent": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,12}(?:\\.\\d{0,2})?$",
+      "readOnly": true,
+      "description": "Total of this category's expenses in this month and currency."
+     },
+     "remaining": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,12}(?:\\.\\d{0,2})?$",
+      "readOnly": true,
+      "description": "limit minus spent. Negative when over budget."
+     },
+     "over_budget": {
+      "type": "boolean",
+      "readOnly": true
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+     }
+    },
+    "required": [
+     "category",
+     "created_at",
+     "id",
+     "limit",
+     "month",
+     "over_budget",
+     "remaining",
+     "spent",
+     "updated_at"
+    ]
+   },
+   "BudgetRequest": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "integer"
+     },
+     "month": {
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+      "example": "2026-10",
+      "description": "YYYY-MM"
+     },
+     "limit": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,10}(?:\\.\\d{0,2})?$"
+     },
+     "currency": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z]{3}$"
+     }
+    },
+    "required": [
+     "category",
+     "limit",
+     "month"
+    ]
+   },
+   "Category": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer",
+      "readOnly": true
+     },
+     "name": {
+      "type": "string",
+      "maxLength": 50
+     },
+     "color": {
+      "oneOf": [
+       {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$",
+        "maxLength": 7
+       },
+       {
+        "type": "string",
+        "maxLength": 0
+       }
+      ]
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+     }
+    },
+    "required": [
+     "created_at",
+     "id",
+     "name",
+     "updated_at"
+    ]
+   },
+   "CategoryRequest": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50
+     },
+     "color": {
+      "oneOf": [
+       {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$",
+        "maxLength": 7
+       },
+       {
+        "type": "string",
+        "maxLength": 0
+       }
+      ]
+     }
+    },
+    "required": [
+     "name"
+    ]
+   },
+   "CategoryTotal": {
+    "type": "object",
+    "properties": {
+     "category_id": {
+      "type": "integer",
+      "nullable": true
+     },
+     "category_name": {
+      "type": "string",
+      "nullable": true
+     },
+     "total": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,12}(?:\\.\\d{0,2})?$"
+     },
+     "count": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "category_id",
+     "category_name",
+     "count",
+     "total"
+    ]
+   },
+   "EmailTokenObtainPairRequest": {
+    "type": "object",
+    "description": "Log in with email + password instead of username + password.",
+    "properties": {
+     "email": {
+      "type": "string",
+      "format": "email",
+      "writeOnly": true,
+      "minLength": 1
+     },
+     "password": {
+      "type": "string",
+      "writeOnly": true,
+      "minLength": 1
+     }
+    },
+    "required": [
+     "email",
+     "password"
+    ]
+   },
+   "Error": {
+    "type": "object",
+    "properties": {
+     "error": {
+      "$ref": "#/components/schemas/ErrorBody"
+     }
+    },
+    "required": [
+     "error"
+    ]
+   },
+   "ErrorBody": {
+    "type": "object",
+    "properties": {
+     "code": {
+      "type": "string"
+     },
+     "message": {
+      "type": "string"
+     },
+     "details": {
+      "type": "object",
+      "additionalProperties": {},
+      "nullable": true
+     }
+    },
+    "required": [
+     "code",
+     "details",
+     "message"
+    ]
+   },
+   "Expense": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer",
+      "readOnly": true
+     },
+     "amount": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,10}(?:\\.\\d{0,2})?$"
+     },
+     "currency": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{3}$"
+     },
+     "description": {
+      "type": "string",
+      "maxLength": 255
+     },
+     "date": {
+      "type": "string",
+      "format": "date"
+     },
+     "category": {
+      "type": "integer",
+      "nullable": true
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+     },
+     "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+     }
+    },
+    "required": [
+     "amount",
+     "created_at",
+     "date",
+     "id",
+     "updated_at"
+    ]
+   },
+   "ExpenseRequest": {
+    "type": "object",
+    "properties": {
+     "amount": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,10}(?:\\.\\d{0,2})?$"
+     },
+     "currency": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z]{3}$"
+     },
+     "description": {
+      "type": "string",
+      "maxLength": 255
+     },
+     "date": {
+      "type": "string",
+      "format": "date"
+     },
+     "category": {
+      "type": "integer",
+      "nullable": true
+     }
+    },
+    "required": [
+     "amount",
+     "date"
+    ]
+   },
+   "Health": {
+    "type": "object",
+    "properties": {
+     "status": {
+      "type": "string"
+     },
+     "database": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "database",
+     "status"
+    ]
+   },
+   "MonthTotal": {
+    "type": "object",
+    "properties": {
+     "month": {
+      "type": "string",
+      "description": "YYYY-MM"
+     },
+     "total": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,12}(?:\\.\\d{0,2})?$"
+     },
+     "count": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "count",
+     "month",
+     "total"
+    ]
+   },
+   "PatchedBudgetRequest": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "integer"
+     },
+     "month": {
+      "type": "string",
+      "pattern": "^\\d{4}-(0[1-9]|1[0-2])$",
+      "example": "2026-10",
+      "description": "YYYY-MM"
+     },
+     "limit": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,10}(?:\\.\\d{0,2})?$"
+     },
+     "currency": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z]{3}$"
+     }
+    }
+   },
+   "PatchedCategoryRequest": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 50
+     },
+     "color": {
+      "oneOf": [
+       {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$",
+        "maxLength": 7
+       },
+       {
+        "type": "string",
+        "maxLength": 0
+       }
+      ]
+     }
+    }
+   },
+   "PatchedExpenseRequest": {
+    "type": "object",
+    "properties": {
+     "amount": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,10}(?:\\.\\d{0,2})?$"
+     },
+     "currency": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z]{3}$"
+     },
+     "description": {
+      "type": "string",
+      "maxLength": 255
+     },
+     "date": {
+      "type": "string",
+      "format": "date"
+     },
+     "category": {
+      "type": "integer",
+      "nullable": true
+     }
+    }
+   },
+   "Register": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer",
+      "readOnly": true
+     },
+     "email": {
+      "type": "string",
+      "format": "email"
+     },
+     "date_joined": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+     }
+    },
+    "required": [
+     "date_joined",
+     "email",
+     "id"
+    ]
+   },
+   "RegisterRequest": {
+    "type": "object",
+    "properties": {
+     "email": {
+      "type": "string",
+      "format": "email",
+      "minLength": 1
+     },
+     "password": {
+      "type": "string",
+      "writeOnly": true,
+      "minLength": 1
+     }
+    },
+    "required": [
+     "email",
+     "password"
+    ]
+   },
+   "Summary": {
+    "type": "object",
+    "properties": {
+     "start": {
+      "type": "string",
+      "format": "date",
+      "nullable": true
+     },
+     "end": {
+      "type": "string",
+      "format": "date",
+      "nullable": true
+     },
+     "currency": {
+      "type": "string"
+     },
+     "total": {
+      "type": "string",
+      "format": "decimal",
+      "pattern": "^-?\\d{0,12}(?:\\.\\d{0,2})?$"
+     },
+     "count": {
+      "type": "integer"
+     },
+     "by_category": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/CategoryTotal"
+      }
+     },
+     "by_month": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/MonthTotal"
+      }
+     }
+    },
+    "required": [
+     "by_category",
+     "by_month",
+     "count",
+     "currency",
+     "end",
+     "start",
+     "total"
+    ]
+   },
+   "TokenRefreshRequest": {
+    "type": "object",
+    "properties": {
+     "refresh": {
+      "type": "string",
+      "writeOnly": true,
+      "minLength": 1
+     }
+    },
+    "required": [
+     "refresh"
+    ]
+   },
+   "User": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer",
+      "readOnly": true
+     },
+     "email": {
+      "type": "string",
+      "format": "email",
+      "readOnly": true,
+      "title": "Email address"
+     },
+     "date_joined": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+     }
+    },
+    "required": [
+     "date_joined",
+     "email",
+     "id"
+    ]
+   }
+  },
+  "securitySchemes": {
+   "jwtAuth": {
+    "type": "http",
+    "scheme": "bearer",
+    "bearerFormat": "JWT"
+   }
+  }
+ }
+}

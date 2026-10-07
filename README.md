@@ -166,3 +166,13 @@ Cypress, Texas
 Email: briankelley141@gmail.com
 
 GitHub: https://github.com/briankelley-it
+
+## Live Demos
+
+The live demos are static snapshots, because GitHub Pages cannot run Django:
+
+- `thistledown/` is built with `python manage.py export_static` from the ThistledownHomes repository.
+- `taskforge/` is built with `tools/build_taskforge_demo.py`, which seeds the demo account and saves every page and HTMX fragment. Browsing works, and changes show a notice instead of saving.
+- `ledgerapi/` is built with `tools/build_ledgerapi_demo.py`, which runs the real API, records a response for every endpoint, and serves Swagger UI where "Try it out" returns those recordings.
+
+Each script explains its usage at the top of the file.

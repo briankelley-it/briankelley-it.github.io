@@ -1,0 +1,9 @@
+Title,Status,Priority,Due date,Assignee,Created by,Created at
+App Store screenshots,To Do,Medium,2026-10-14,priya@taskforge.dev,sam@taskforge.dev,2026-10-07T11:31:55+00:00
+Beta tester onboarding doc,To Do,Low,2026-10-16,sam@taskforge.dev,priya@taskforge.dev,2026-10-07T11:31:55+00:00
+Fix keyboard covering the input,To Do,High,2026-10-06,demo@taskforge.dev,sam@taskforge.dev,2026-10-07T11:31:55+00:00
+Dark mode icons,To Do,Low,,,demo@taskforge.dev,2026-10-07T11:31:55+00:00
+Crash reporting,In Progress,Medium,2026-10-07,sam@taskforge.dev,priya@taskforge.dev,2026-10-07T11:31:55+00:00
+Offline mode for task lists,In Progress,High,2026-10-10,demo@taskforge.dev,priya@taskforge.dev,2026-10-07T11:31:55+00:00
+Push notification permissions,Done,Medium,2026-10-03,priya@taskforge.dev,demo@taskforge.dev,2026-10-07T11:31:55+00:00
+Sign-in with email,Done,High,2026-09-27,demo@taskforge.dev,sam@taskforge.dev,2026-10-07T11:31:55+00:00
