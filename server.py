@@ -34,6 +34,15 @@ class PortfolioHandler(SimpleHTTPRequestHandler):
             return None
         if path == "/":
             self.path = "/index.html"
+        elif path.startswith("/thistledown/"):
+            # Static export of the Thistledown Homes demo: folders serve their index.html.
+            candidate = (ROOT / path.lstrip("/")).resolve()
+            if candidate.is_dir():
+                candidate = candidate / "index.html"
+            if ".." in path or "%" in path or not candidate.is_relative_to(ROOT / "thistledown") or not candidate.is_file():
+                self.send_error(404)
+                return None
+            self.path = "/" + candidate.relative_to(ROOT).as_posix()
         elif path.lstrip("/") not in PUBLIC_FILES:
             if not path.startswith("/assets/") or ".." in path or "%" in path:
                 self.send_error(404)
