@@ -28,5 +28,15 @@
     "features": ["Homes for sale with price, bedroom, location, and status filters, saved favorites, and a page for each property.", "Interactive MapLibre map synced with the listing cards.", "Past deals and deals in progress with automatically calculated profit and buyer savings."],
     "engineering": ["A custom management command renders every public page to static HTML for GitHub Pages.", "Admin dashboard with Google sign-in and an approval step for new accounts.", "33 automated tests cover pages, filters, forms, and admin sign-in."],
     "stack": ["Python", "Django", "JavaScript", "MapLibre", "SQLite"]
+  },
+  "houseledger": {
+    "name": "HouseLedger",
+    "category": "Web application",
+    "repo": "https://github.com/briankelley-it/HomeSync",
+    "demo": null,
+    "summary": "A Django household finance app for bills, recurring payments, budgets, properties, and receipts, shared across everyone in a household.",
+    "features": ["Bills with weekly, monthly, quarterly, and annual recurring schedules, plus an interactive bill calendar.", "Full and partial payments, monthly category budgets, income tracking, and spending analytics.", "Household invitations with viewer, member, admin, and owner roles, plus permission-checked document uploads."],
+    "engineering": ["A shared service layer is used by the web views, the REST API, and Celery tasks.", "Payments run in database transactions with row locking, and money is stored as Decimal.", "Every query is scoped to the user’s household, and daily Celery jobs email due-soon and overdue reminders."],
+    "stack": ["Python", "Django", "Django REST Framework", "PostgreSQL", "Celery", "Redis", "HTMX", "Tailwind CSS", "Docker", "pytest"]
   }
 }
