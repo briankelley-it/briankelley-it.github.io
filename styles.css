@@ -86,8 +86,8 @@ nav a:hover {
     margin: 0 auto 24px;
     padding: 4px;
     border-radius: var(--radius);
-    background: conic-gradient(from var(--ring-angle, 0deg), var(--accent), var(--accent-2), #3fd0c9, var(--accent));
-    box-shadow: 0 0 28px rgba(91, 140, 255, .28);
+    background: conic-gradient(from var(--ring-angle, 0deg), #ffffff, #8a8a8a, #1a1a1a, #6e6e6e, #ffffff);
+    box-shadow: 0 0 24px rgba(255, 255, 255, .12);
     animation: bubble-morph 9s ease-in-out infinite, ring-spin 6s linear infinite;
 }
 .hero .profile-photo {
