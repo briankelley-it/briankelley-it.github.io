@@ -216,12 +216,47 @@ h3 {
     margin-top: 16px;
 }
 .repo-link {
-    display: inline-block;
-    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 10px 0 0;
+    padding: 9px 18px;
     font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    color: var(--ink);
+    background: rgba(255, 255, 255, .03);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: transform .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
 }
-.repo-link + .repo-link {
-    margin-left: 18px;
+.repo-link span {
+    font-size: 10px;
+}
+.repo-link:hover {
+    color: var(--hover);
+    border-color: var(--accent);
+    background: rgba(91, 140, 255, .1);
+    transform: translateY(-2px);
+}
+.repo-link--primary {
+    color: #fff;
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 4px 16px rgba(91, 140, 255, .25);
+}
+.repo-link--primary:hover {
+    color: #fff;
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 6px 22px rgba(91, 140, 255, .4);
+}
+.repo-link:active {
+    transform: translateY(0);
+}
+.repo-link svg {
+    flex: none;
 }
 details {
     margin-top: 18px;
@@ -348,5 +383,9 @@ footer {
 }
 .profile-bubble {
     animation: none;
+}
+.repo-link, .repo-link:hover {
+    transition: none;
+    transform: none;
 }
 }
