@@ -231,8 +231,8 @@ h3 {
     border-radius: 999px;
     transition: transform .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
 }
-.repo-link span {
-    font-size: 10px;
+.repo-link i {
+    font-size: 13px;
 }
 .repo-link:hover {
     color: var(--hover);
@@ -242,21 +242,16 @@ h3 {
 }
 .repo-link--primary {
     color: #fff;
-    border-color: transparent;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    box-shadow: 0 4px 16px rgba(91, 140, 255, .25);
+    border-color: var(--accent);
+    background: var(--accent);
 }
 .repo-link--primary:hover {
     color: #fff;
-    border-color: transparent;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    box-shadow: 0 6px 22px rgba(91, 140, 255, .4);
+    border-color: #4a7af0;
+    background: #4a7af0;
 }
 .repo-link:active {
     transform: translateY(0);
-}
-.repo-link svg {
-    flex: none;
 }
 details {
     margin-top: 18px;
