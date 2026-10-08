@@ -125,6 +125,31 @@ nav a:hover {
     color: var(--muted);
     margin-top: 14px;
 }
+.typed {
+    color: var(--accent);
+    font-weight: 600;
+}
+.typed.is-typing::after {
+    content: "";
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    margin-left: 3px;
+    vertical-align: -0.15em;
+    background: var(--accent);
+    animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink {
+    50% { opacity: 0; }
+}
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
 .hero-intro {
     max-width: 530px;
     margin: 23px auto 0;
