@@ -392,28 +392,6 @@ footer {
     transform: translateY(-4px);
     box-shadow: 0 28px 60px rgba(0, 0, 0, .55), 0 0 0 1px rgba(91, 140, 255, .35);
 }
-.browser-bar {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--line);
-}
-.browser-bar span {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #3a3f48;
-}
-.browser-bar span:nth-child(1) { background: #ff5f57; }
-.browser-bar span:nth-child(2) { background: #febc2e; }
-.browser-bar span:nth-child(3) { background: #28c840; }
-.browser-bar em {
-    margin-left: 10px;
-    color: var(--muted);
-    font-size: 12px;
-    font-style: normal;
-}
 .browser img {
     display: block;
     width: 100%;
