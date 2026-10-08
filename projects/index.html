@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Projects by Brian Kelley, a Python developer in Cypress, Texas: Django web apps and REST APIs with live demos and screenshots.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0f1115">
+  <title>Projects | Brian Kelley</title>
+  <link rel="icon" href="../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../styles.css">
+  <script src="https://kit.fontawesome.com/31778849f3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header container container--wide">
+    <a class="site-name" href="../">Brian Kelley</a>
+    <nav aria-label="Main navigation"><a href="./" aria-current="page">Projects</a><a href="../#about">About</a><a href="../#contact">Contact</a></nav>
+  </header>
+  <main id="main" class="container container--wide">
+    <section class="projects-hero" aria-labelledby="page-title">
+      <p class="eyebrow">Portfolio</p>
+      <h1 id="page-title">Projects</h1>
+      <p>Web applications and APIs I’ve built with Python and Django. Most have a live demo you can click through right in your browser.</p>
+    </section>
+
+    <article class="showcase">
+      <div class="gallery">
+        <figure class="browser">
+          <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><em>TaskForge</em></div>
+          <img class="gallery-main" src="../assets/projects/taskforge-board.jpg" width="1200" height="750" alt="TaskForge’s Kanban board with To Do, In Progress, and Done columns">
+        </figure>
+        <div class="thumbs" role="group" aria-label="TaskForge screenshots">
+          <button type="button" class="thumb is-active" aria-pressed="true" data-src="../assets/projects/taskforge-board.jpg" data-alt="TaskForge’s Kanban board with To Do, In Progress, and Done columns"><img src="../assets/projects/taskforge-board.jpg" alt="" loading="lazy"><span class="visually-hidden">Kanban board</span></button>
+          <button type="button" class="thumb" aria-pressed="false" data-src="../assets/projects/taskforge-mytasks.jpg" data-alt="TaskForge’s My tasks page listing assigned tasks with due dates and priorities"><img src="../assets/projects/taskforge-mytasks.jpg" alt="" loading="lazy"><span class="visually-hidden">My tasks</span></button>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <p class="eyebrow">Web application</p>
+        <h2>TaskForge</h2>
+        <p>A task management app for small teams, with a Kanban board, task assignments, comments, project invitations, and CSV export.</p>
+        <p>I worked on project permissions, database transactions with row locking, and automated tests to keep board updates consistent and project data private to the right users.</p>
+        <ul class="chips" aria-label="Technologies"><li>Python</li><li>Django</li><li>PostgreSQL</li><li>HTMX</li><li>Docker</li></ul>
+        <div class="showcase-links">
+          <a class="repo-link repo-link--primary" href="../taskforge/"><i class="fa-solid fa-play" aria-hidden="true"></i> View the live demo</a>
+          <a class="repo-link" href="https://github.com/briankelley-it/TaskForge" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="showcase">
+      <div class="gallery">
+        <figure class="browser">
+          <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><em>Thistledown Homes</em></div>
+          <img class="gallery-main" src="../assets/projects/thistledown-home.jpg" width="1200" height="750" loading="lazy" alt="Thistledown Homes’ home page with the headline “Making great homes actually affordable”">
+        </figure>
+        <div class="thumbs" role="group" aria-label="Thistledown Homes screenshots">
+          <button type="button" class="thumb is-active" aria-pressed="true" data-src="../assets/projects/thistledown-home.jpg" data-alt="Thistledown Homes’ home page with the headline “Making great homes actually affordable”"><img src="../assets/projects/thistledown-home.jpg" alt="" loading="lazy"><span class="visually-hidden">Home page</span></button>
+          <button type="button" class="thumb" aria-pressed="false" data-src="../assets/projects/thistledown-map.jpg" data-alt="Thistledown Homes’ interactive map of Texas with price markers beside a list of homes"><img src="../assets/projects/thistledown-map.jpg" alt="" loading="lazy"><span class="visually-hidden">Interactive map</span></button>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <p class="eyebrow">Web application</p>
+        <h2>Thistledown Homes</h2>
+        <p>A real estate website for a fictional home investment company. Visitors can filter homes for sale, save favorites, browse an interactive map, and see past deals with calculated buyer savings.</p>
+        <p>Built with Django models, views, and templates, plus an admin dashboard. A custom management command exports every page to static HTML so the demo runs on GitHub Pages.</p>
+        <ul class="chips" aria-label="Technologies"><li>Python</li><li>Django</li><li>JavaScript</li><li>MapLibre</li><li>SQLite</li></ul>
+        <div class="showcase-links">
+          <a class="repo-link repo-link--primary" href="../thistledown/"><i class="fa-solid fa-play" aria-hidden="true"></i> View the live demo</a>
+          <a class="repo-link" href="https://github.com/briankelley-it/ThistledownHomes" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="showcase">
+      <div class="gallery">
+        <figure class="browser">
+          <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><em>HouseLedger</em></div>
+          <img class="gallery-main" src="https://raw.githubusercontent.com/briankelley-it/HomeSync/HEAD/docs/screenshots/dashboard-dark.png" loading="lazy" alt="HouseLedger’s dashboard in dark mode with bills due, spending trends, and upcoming bills">
+        </figure>
+        <div class="thumbs" role="group" aria-label="HouseLedger screenshots">
+          <button type="button" class="thumb is-active" aria-pressed="true" data-src="https://raw.githubusercontent.com/briankelley-it/HomeSync/HEAD/docs/screenshots/dashboard-dark.png" data-alt="HouseLedger’s dashboard in dark mode with bills due, spending trends, and upcoming bills"><img src="https://raw.githubusercontent.com/briankelley-it/HomeSync/HEAD/docs/screenshots/dashboard-dark.png" alt="" loading="lazy"><span class="visually-hidden">Dashboard</span></button>
+          <button type="button" class="thumb" aria-pressed="false" data-src="https://raw.githubusercontent.com/briankelley-it/HomeSync/HEAD/docs/screenshots/calendar.png" data-alt="HouseLedger’s monthly bill calendar with color-coded payment status"><img src="https://raw.githubusercontent.com/briankelley-it/HomeSync/HEAD/docs/screenshots/calendar.png" alt="" loading="lazy"><span class="visually-hidden">Bill calendar</span></button>
+          <button type="button" class="thumb" aria-pressed="false" data-src="https://raw.githubusercontent.com/briankelley-it/HomeSync/HEAD/docs/screenshots/analytics.png" data-alt="HouseLedger’s analytics page with spending charts"><img src="https://raw.githubusercontent.com/briankelley-it/HomeSync/HEAD/docs/screenshots/analytics.png" alt="" loading="lazy"><span class="visually-hidden">Analytics</span></button>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <p class="eyebrow">Web application</p>
+        <h2>HouseLedger</h2>
+        <p>A household finance app for tracking bills, recurring payments, budgets, properties, and receipts. Everyone in a household can see what’s due, record payments, and compare spending against monthly budgets.</p>
+        <p>Business rules live in a shared service layer used by the web pages, the REST API, and Celery background jobs. Payments run in database transactions with row locking, and every query is scoped to the user’s household.</p>
+        <ul class="chips" aria-label="Technologies"><li>Python</li><li>Django</li><li>DRF</li><li>PostgreSQL</li><li>Celery</li><li>Redis</li><li>HTMX</li><li>Tailwind CSS</li></ul>
+        <div class="showcase-links">
+          <a class="repo-link" href="https://github.com/briankelley-it/HomeSync" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="showcase">
+      <div class="gallery">
+        <figure class="browser">
+          <div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><em>LedgerAPI</em></div>
+          <img class="gallery-main" src="../assets/projects/ledgerapi.jpg" width="1200" height="750" loading="lazy" alt="LedgerAPI’s interactive OpenAPI documentation listing auth and budget endpoints">
+        </figure>
+      </div>
+      <div class="showcase-body">
+        <p class="eyebrow">Backend / REST API</p>
+        <h2>LedgerAPI</h2>
+        <p>An expense-tracking REST API with JWT authentication, spending categories, monthly budgets, and reports.</p>
+        <p>User-scoped queries keep accounts separate, decimal arithmetic protects monetary amounts, and SQL subqueries calculate budget totals. It ships with OpenAPI docs and tests with a 90% coverage minimum.</p>
+        <ul class="chips" aria-label="Technologies"><li>Python</li><li>Django REST Framework</li><li>PostgreSQL</li><li>JWT</li><li>OpenAPI</li></ul>
+        <div class="showcase-links">
+          <a class="repo-link repo-link--primary" href="../ledgerapi/"><i class="fa-solid fa-play" aria-hidden="true"></i> Try the API</a>
+          <a class="repo-link" href="https://github.com/briankelley-it/LedgerAPI" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
+        </div>
+      </div>
+    </article>
+
+    <p class="more-repos">More code and work in progress on <a href="https://github.com/briankelley-it" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+  </main>
+  <footer class="container container--wide"><p>Brian Kelley · Cypress, Texas</p><a href="../">Back to home</a></footer>
+  <script src="../gallery.js" defer></script>
+</body>
+</html>
