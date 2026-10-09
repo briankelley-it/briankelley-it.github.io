@@ -195,6 +195,16 @@ nav a:hover {
     color: var(--hover);
     border-color: var(--muted);
 }
+.button--linkedin {
+    background: #0a66c2;
+    color: #fff;
+    border-color: #0a66c2;
+}
+.button--linkedin:hover {
+    background: #1d7ee0;
+    color: #fff;
+    border-color: #1d7ee0;
+}
 main>section:not(.hero) {
     padding-block: 44px;
     border-top: 1px solid var(--line);
